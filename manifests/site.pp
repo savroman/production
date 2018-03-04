@@ -1,3 +1,3 @@
 file { '/tmp/hello':
-  content => "Hello, world\n",
+  content => "Hello, world!!!\n",
 }
