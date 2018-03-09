@@ -30,7 +30,7 @@ class java8 (
   exec { 'install':
     command => "sudo rpm -ihv ${rpm}",
     path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-    onlyif  => `test -e ${laod_dir}${rpm}`,
+    onlyif  => 'test -e /home/vagrant/jdk-8u162-linux-x64.rpm',
   }
   # set PATH veriables
   #file { '/etc/profile.d/app.sh':
