@@ -23,7 +23,7 @@ class java8 (
   exec { 'upload_rpm':
     command => "sudo wget ${source}",
     path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-    cwd => ${laod_dir},
+    cwd => "${laod_dir}",
   }
 
   # install java
