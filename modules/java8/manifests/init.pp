@@ -43,7 +43,6 @@ class java8 (
     ensure => present,
     mode => '0775',
     content => epp('java8/app.sh.epp', $app_sh_hash),
-    checksum => 'none',
   }
   #}
 }
