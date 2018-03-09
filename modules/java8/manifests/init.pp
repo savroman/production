@@ -23,27 +23,31 @@ class java8 (
   # get JDK8 .rpm
   exec { 'upload_rpm':
     command => "sudo wget ${source}",
-    path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-    cwd => "${load_dir}",
+    path    => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+    cwd     => "${load_dir}",
     creates => "${load_dir}${rpm}",
   }
 
   # install java
   exec { 'install':
     command => "sudo rpm -ihv ${rpm}",
-    path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-    onlyif  => "test -e ${load_dir}+${rpm}",
+    path    => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+    onlyif  => "test -e ${load_dir}${rpm}",
   }
 
   # set PATH veriables
-  $app_sh_hash ={
-    'java_path' =>$java_path,
+  $app_sh_hash = {
+    'java_path' => $java_path,
   }
-  file { '/etc/profile.d/app.sh':
-    ensure => present,
-    mode => '0775',
+  file { 'tmp/app.sh':
+    ensure  => present,
+    mode    => '0775',
     content => epp('java8/app.sh.epp', $app_sh_hash),
   }
-  #}
+  exec { 'set_path':
+    command => "sudo mv tmp/app.sh etc/profile.d/",
+    path    => '/bin:/sbin',
+    onlyif  => "test -e tmp/app.sh",
+  }
 }
 #http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jdk-8u162-linux-x64.rpm
