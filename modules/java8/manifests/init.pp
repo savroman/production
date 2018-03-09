@@ -19,6 +19,7 @@ class java8 (
   $rpm = "${java_se}-${version_major}-linux-x64.rpm"
   $source = "${cookie} ${oracle_url}${version_major}-${version_minor}/${hash}/$rpm"
   $java_path = "/usr/java/jdk1.8.0_162"
+
   # get JDK8 .rpm
   exec { 'upload_rpm':
     command => "sudo wget ${source}",
@@ -31,7 +32,7 @@ class java8 (
   exec { 'install':
     command => "sudo rpm -ihv ${rpm}",
     path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-    onlyif  => 'test -e "${laod_dir}${rpm}"',
+    onlyif  => "test -e ${laod_dir}${rpm}",
   }
 
   # set PATH veriables
@@ -40,8 +41,9 @@ class java8 (
   }
   file { '/etc/profile.d/app.sh':
     ensure => present,
-    mode => '0774',
+    mode => '0775',
     content => epp('java8/app.sh.epp', $app_sh_hash),
+    checksum => 'none',
   }
   #}
 }
