@@ -24,7 +24,7 @@ class java8 (
     command => "sudo wget ${source}",
     path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
     cwd => "${laod_dir}",
-    creates => ,
+    creates => "${laod_dir}${rpm}",
   }
 
   # install java
