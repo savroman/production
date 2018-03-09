@@ -1,0 +1,6 @@
+<%- | $java_path
+| -%>
+# This file is managed by Puppet. Please do not make manual changes.
+export JAVA_HOME=<%= $java_path %>
+export JRE_HOME=<%= $java_path %>/jre
+export PATH=$PATH:<%= $java_path %>/bin:<%= $java_path %>/jre/bin
