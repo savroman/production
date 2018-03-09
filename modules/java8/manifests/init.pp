@@ -45,7 +45,7 @@ class java8 (
     content => epp('java8/app.sh.epp', $app_sh_hash),
   }
   exec { 'set_path':
-    command => "sudo mv tmp/app.sh etc/profile.d/",
+    command => "sudo mv /tmp/app.sh etc/profile.d/",
     path    => '/bin:/sbin',
     onlyif  => "test -e /tmp/app.sh",
   }
