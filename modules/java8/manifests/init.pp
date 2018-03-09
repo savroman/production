@@ -40,7 +40,7 @@ class java8 (
   }
   file { '/etc/profile.d/app.sh':
     ensure => present,
-    mode => 0774,
+    mode => '0774',
     content => epp('java8/app.sh.epp', $app_sh_hash),
   }
   #}
