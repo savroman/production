@@ -39,7 +39,7 @@ class java8 (
   $app_sh_hash = {
     'java_path' => $java_path,
   }
-  file { 'tmp/app.sh':
+  file { '/tmp/app.sh':
     ensure  => present,
     mode    => '0775',
     content => epp('java8/app.sh.epp', $app_sh_hash),
@@ -47,7 +47,7 @@ class java8 (
   exec { 'set_path':
     command => "sudo mv tmp/app.sh etc/profile.d/",
     path    => '/bin:/sbin',
-    onlyif  => "test -e tmp/app.sh",
+    onlyif  => "test -e /tmp/app.sh",
   }
 }
 #http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jdk-8u162-linux-x64.rpm
