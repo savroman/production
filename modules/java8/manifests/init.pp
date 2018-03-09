@@ -22,21 +22,23 @@ class java8 (
 
   $rpm       = "${java_se}-8u${version_major}-linux-x64.rpm"
   $source    = "${cookie} ${oracle_url}8u${version_major}-${version_minor}/${hash}/$rpm"
+  $rpm_path  = "${load_dir}${rpm}"
   $java_path = "/usr/java/jdk1.8.0_${version_major}"
+
 
   # get JDK8 .rpm
   exec { 'upload_rpm':
     command => "sudo wget ${source}",
     path    => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
     cwd     => "${load_dir}",
-    creates => "${load_dir}${rpm}",
+    creates => "${rpm_path}",
   }
 
   # install java
   exec { 'install':
     command => "sudo rpm -ihv ${rpm}",
     path    => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-    onlyif  => "test -e ${load_dir}${rpm}",
+    onlyif  => "test -e ${rpm_path}",
   }
 
   # set PATH veriables
