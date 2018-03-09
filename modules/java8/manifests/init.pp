@@ -35,10 +35,13 @@ class java8 (
   }
 
   # set PATH veriables
+  $app_sh_hash ={
+    'java_path' =>$java_path,
+  }
   file { '/etc/profile.d/app.sh':
     ensure => present,
     mode => 0774,
-    content => epp('java8/app.sh.epp', $java_path),
+    content => epp('java8/app.sh.epp', $app_sh_hash),
   }
   #}
 }
