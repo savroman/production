@@ -37,6 +37,7 @@ class java8 (
   exec { 'install':
     command => "sudo rpm -ihv ${rpm}",
     path    => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+    cwd     => "${load_dir}",
     onlyif  => "test -e ${rpm_path}",
   }
 
