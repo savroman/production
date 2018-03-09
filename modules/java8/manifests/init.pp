@@ -13,7 +13,7 @@ class java8 (
   $version_major = '8u162',
   $version_minor = 'b12',
   $hash = '0da788060d494f5095bf8624735fa2f1',
-  $laod_dir = '/home/vagrant/',
+  $load_dir = "/tmp/",
   ) {
 
   $rpm = "${java_se}-${version_major}-linux-x64.rpm"
@@ -32,7 +32,7 @@ class java8 (
   exec { 'install':
     command => "sudo rpm -ihv ${rpm}",
     path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-    onlyif  => "test -e ${laod_dir}${rpm}",
+    onlyif  => "test -e ${load_dir}+${rpm}",
   }
 
   # set PATH veriables
