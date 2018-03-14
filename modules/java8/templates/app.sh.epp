@@ -1,12 +1,12 @@
 <%- | String $java_path,
-      String $java_se='jdk'
+      String $java_se
 | -%>
 # This file is managed by Puppet. Please do not make manual changes.
 export JAVA_HOME=<%= $java_path %>
-<% if $java_se =~'jdk' { -%>
+<% if $java_se =~ jdk { -%>
 export JRE_HOME=<%= $java_path %>/jre
 export PATH=$PATH:<%= $java_path %>/bin:<%= $java_path %>/jre/bin
 <% } -%>
-<% if $java_se =~'jre' { -%>
+<% if $java_se =~ jre { -%>
 export PATH=$PATH:<%= $java_path %>/bin
 <% } -%>

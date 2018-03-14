@@ -21,6 +21,11 @@ class java8 (
   $arch_bit      = $java8::params::arch_bit,
 ) inherits java8::params {
 
+ # validate java Standard Edition to download
+  if $java_se !~ /(jre|jdk)/ {
+    fail('Java SE must be either jre or jdk.')
+  }
+
   $pkg       = "${java_se}-8u${version_major}-${arch_bit}.rpm"
   $source    = "${cookie} ${oracle_url}8u${version_major}-${version_minor}/${hash}/$pkg"
   $pkg_path  = "${load_dir}${pkg}"
@@ -37,15 +42,16 @@ class java8 (
 
   # install java
   exec { 'install':
-    command => "sudo rpm -ihv ${pkg}",
+    command => "sudo rpm -Uhv ${pkg}",
     path    => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
     cwd     => "${load_dir}",
+    creates => "$java_path",
     onlyif  => "test -e ${pkg_path}",
   }
 
   # set PATH veriables
   $app_sh_hash = {
-    'java_path' => $java_path,
+    'java_path' => $java_path, 'java_se' => $java_se,
   }
   file { "${load_dir}app.sh":
     ensure  => present,
