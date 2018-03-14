@@ -8,6 +8,7 @@
 #  include java8 {
 #    version_major => '161'
 #    hash          => '2f38c3b165be4555a1fa6e98c45e0808'
+#    java_se       => 'jre',
 # }
 class java8 (
   $java_se       = 'jdk',
@@ -17,35 +18,36 @@ class java8 (
   $version_minor = 'b12',
   $hash          = '0da788060d494f5095bf8624735fa2f1',
   $load_dir      = "/tmp/",
-  ) {
+  $arch_bit      = $java8::params::arch_bit,
+) inherits java8::params {
 
-  $rpm       = "${java_se}-8u${version_major}-linux-x64.rpm"
-  $source    = "${cookie} ${oracle_url}8u${version_major}-${version_minor}/${hash}/$rpm"
-  $rpm_path  = "${load_dir}${rpm}"
-  $java_path = "/usr/java/jdk1.8.0_${version_major}"
+  $pkg       = "${java_se}-8u${version_major}-${arch_bit}.rpm"
+  $source    = "${cookie} ${oracle_url}8u${version_major}-${version_minor}/${hash}/$pkg"
+  $pkg_path  = "${load_dir}${pkg}"
+  $java_path = "/usr/java/${java_se}1.8.0_${version_major}"
 
 
-  # get JDK8 .rpm
-  exec { 'upload_rpm':
+  # get JDK8 .pkg
+  exec { 'upload_pkg':
     command => "sudo wget ${source}",
     path    => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
     cwd     => "${load_dir}",
-    creates => "${rpm_path}",
+    creates => "${pkg_path}",
   }
 
   # install java
   exec { 'install':
-    command => "sudo rpm -ihv ${rpm}",
+    command => "sudo rpm -ihv ${pkg}",
     path    => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
     cwd     => "${load_dir}",
-    onlyif  => "test -e ${rpm_path}",
+    onlyif  => "test -e ${pkg_path}",
   }
 
   # set PATH veriables
   $app_sh_hash = {
     'java_path' => $java_path,
   }
-  file { '/tmp/app.sh':
+  file { "${load_dir}app.sh":
     ensure  => present,
     mode    => '0775',
     content => epp('java8/app.sh.epp', $app_sh_hash),

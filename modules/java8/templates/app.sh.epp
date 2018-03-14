@@ -1,6 +1,11 @@
-<%- | $java_path
+<%- | $java_path,
+      $java_se='jdk'
 | -%>
 # This file is managed by Puppet. Please do not make manual changes.
 export JAVA_HOME=<%= $java_path %>
+if <% $java_se=='jdk' -%>
 export JRE_HOME=<%= $java_path %>/jre
 export PATH=$PATH:<%= $java_path %>/bin:<%= $java_path %>/jre/bin
+<% else -%>
+export PATH=$PATH:<%= $java_path %>/bin
+<% end -%>
