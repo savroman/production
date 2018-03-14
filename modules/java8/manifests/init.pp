@@ -30,6 +30,7 @@ class java8 (
   $source    = "${cookie} ${oracle_url}8u${version_major}-${version_minor}/${hash}/$pkg"
   $pkg_path  = "${load_dir}${pkg}"
   $java_path = "/usr/java/${java_se}1.8.0_${version_major}"
+  $env_filepath = "/etc/profile.d/app.sh"
 
 
   # get JDK8 .pkg
@@ -57,11 +58,22 @@ class java8 (
     ensure  => present,
     mode    => '0775',
     content => epp('java8/app.sh.epp', $app_sh_hash),
+    before  => Exec['set_path'],
   }
   exec { 'set_path':
     command => "sudo mv /tmp/app.sh /etc/profile.d/",
     path    => '/bin:/sbin',
     onlyif  => "test -e /tmp/app.sh",
+    before  => Exec['set_env'],
+  }
+  exec { 'set_env':
+    command      => "${env_filepath}",
+    #path        => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+    #creates     => '/file/created',
+    #cwd         => '/path/to/run/from',
+    #user        => 'user_to_run_as',
+    #unless      => 'test param-that-would-be-true',
+    #refreshonly => true,
   }
 }
 #http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jdk-8u162-linux-x64.rpm

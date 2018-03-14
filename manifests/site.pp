@@ -4,7 +4,10 @@ node agent001 {
 }
 node agent002 {
   class { 'java8': 
+    ensure        => 'present',
+    java_se       => 'jdk',
     version_major => '161',
-    hash          => '2f38c3b165be4555a1fa6e98c45e0808',
+    version_minor => 'b12',
+    hash      => '0da788060d494f5095bf8624735fa2f1',
   }
 }
