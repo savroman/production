@@ -45,5 +45,14 @@ node 'sonar.local' {
 
   class { 'sonarqube':
   }
+
 }
+
+node 'zabbix' {
+  include zabbixsrv
+}
+node 'db'{
+  include zabbixagent
+}
+
                         
