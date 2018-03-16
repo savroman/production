@@ -7,9 +7,10 @@ Wants=network-online.target
 ExecStart=       <%= @script %> start
 ExecStop=        <%= @script %> stop
 ExecReload=      <%= @script %> restart
-PIDFile=         <%= @pid_d %>
+#PIDFile=         <%= @pid_d %>
 Type=forking
 User=sonar
+Group=sonar
 
 [Install]
 WantedBy=multi-user.target

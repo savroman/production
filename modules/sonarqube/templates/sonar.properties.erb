@@ -34,20 +34,20 @@ sonar.jdbc.url=jdbc:h2:tcp://localhost:9092/sonar
 sonar.jdbc.url=<%= @jdbc['url'] %>
 <% end -%>
 
-sonar.jdbc.maxActive:              <% if @jdbc['max_active'] -%><%= @jdbc['max_active'] %><% else -%>50
-<% end -%>
-sonar.jdbc.maxIdle:                <% if @jdbc['max_idle'] -%><%= @jdbc['max_idle'] %><% else -%>5
-<% end -%>
-sonar.jdbc.minIdle:                <% if @jdbc['min_idle'] -%><%= @jdbc['min_idle'] %><% else -%>2
-<% end -%>
-sonar.jdbc.maxWait:                <% if @jdbc['max_wait'] -%><%= @jdbc['max_wait'] %><% else -%>5000
-<% end -%>
-sonar.jdbc.minEvictableIdleTimeMillis:     <% if @jdbc['min_evictable_idle_time_millis'] -%><%= @jdbc['min_evictable_idle_time_millis'] %><% else -%>600000
-<% end -%>
-sonar.jdbc.timeBetweenEvictionRunsMillis:  <% if @jdbc['time_between_eviction_runs_millis'] %><%= @jdbc['time_between_eviction_runs_millis'] -%><% else -%>30000
-<% end -%>
+#sonar.jdbc.maxActive:          <% if @jdbc['max_active'] -%><%= @jdbc['max_active'] %><% else -%>50
+#<% end -%>
+#sonar.jdbc.maxIdle:            <% if @jdbc['max_idle'] -%><%= @jdbc['max_idle'] %><% else -%>5
+#<% end -%>
+#sonar.jdbc.minIdle:            <% if @jdbc['min_idle'] -%><%= @jdbc['min_idle'] %><% else -%>2
+#<% end -%>
+#sonar.jdbc.maxWait:            <% if @jdbc['max_wait'] -%><%= @jdbc['max_wait'] %><% else -%>5000
+#<% end -%>
+#sonar.jdbc.minEvictableIdleTimeMillis:     <% if @jdbc['min_evictable_idle_time_millis'] -%><%= @jdbc['min_evictable_idle_time_millis'] %><% else -%>600000
+#<% end -%>
+#sonar.jdbc.timeBetweenEvictionRunsMillis:  <% if @jdbc['time_between_eviction_runs_millis'] %><%= @jdbc['time_between_eviction_runs_millis'] -%><% else -%>30000
+#<% end -%>
 
-<% end -%>
+#<% end -%>
 
 #sonar.jdbc.username=
 #sonar.jdbc.password=

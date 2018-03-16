@@ -34,11 +34,15 @@ class sonarqube (
 
   validate_absolute_path($source_dir)
 
-  # Sonar home
-  # file { "${user_home}":
-  #   ensure => directory,
-  #   mode   => '0740',
-  # }
+  $package_name   = 'sonarqube'
+  $zipname        = "${package_name}-${version}.zip"
+  $ziproute       = "${source_dir}/${zipname}"
+  $installdir = "${inst_root}/${service}"
+  $extensions_dir = "${user_home}/extensions"
+  $plugin_dir = "${extensions_dir}/plugins"
+
+  $script = "${installdir}/bin/${arch}/sonar.sh"
+  $pid_d  = "${installdir}/bin/${arch}/./SonarQube.pid"
 
   Exec {
     path => '/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/bin',
@@ -48,27 +52,14 @@ class sonarqube (
     group => "${group}",
   }
 
-  # # wget from https://github.com/maestrodev/puppet-wget
-  # include wget
   package { 'wget':
     ensure => installed,
+    before => Exec['download-sonar'],
   }
 
-  $package_name   = 'sonarqube'
-  $zipname        = "${package_name}-${version}.zip"
-  $ziproute       = "${source_dir}/${zipname}"
-  $installdir = "${inst_root}/${service}"
-  $extensions_dir = "${user_home}/extensions"
-  $plugin_dir = "${extensions_dir}/plugins"
-
-  $script = "${installdir}/bin/${arch}/sonar.sh"
-  $pid_d  = "${inst_root}/${service}/bin/${arch}/./SonarQube.pid"
-
-  if ! defined(Package[unzip]) {
-    package { 'unzip':
-      ensure => present,
-      before => Exec[untar],
-    }
+  package { 'unzip':
+    ensure => present,
+    before => Exec['untar'],
   }
 
   group { "${group}":
@@ -86,16 +77,10 @@ class sonarqube (
   ->
   exec { 'download-sonar':
     command      => "wget  ${source_url}/${zipname} -O ${ziproute}",
-    # command   => "wget -nc ${source_url}/${zipname}",
     cwd       => "${source_dir}",
     creates   => "${ziproute}",
   }
 
-  # wget::fetch { 'download-sonar':
-  #   source      => "${source_url}/${package_name}-${version}.zip",
-  #   destination => $tmpzip,
-  # }
-  # ->
   # Sonar home
   # file { $user_home:
   #   ensure => directory,
@@ -135,7 +120,7 @@ class sonarqube (
     ensure  => file,
     content => template('sonarqube/sonar.properties.erb'),
     require => Exec['untar'],
-    notify  => Service['sonarqube'],
+    # notify  => Service['sonarqube'],
     mode    => '0664',
   }
 
@@ -144,18 +129,7 @@ class sonarqube (
     ensure  => file,
     content => template('sonarqube/sonar.service.erb'),
     require => Exec['untar'],
-    notify  => Service['sonarqube'],
-    mode    => '0664',
-  }
-
-  ->
-  file { "/etc/security/limits.conf":
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    content => template('sonarqube/limits.conf.erb'),
-    require => Exec['untar'],
-    notify  => Service['sonarqube'],
+    # notify  => Service['sonarqube'],
     mode    => '0664',
   }
 
@@ -166,34 +140,31 @@ class sonarqube (
     group   => 'root',
     content => template('sonarqube/sysctl.conf.erb'),
     require => Exec['untar'],
-    notify  => Exec['sys_ctl'],
     mode    => '0664',
   }
 
   ->
+  file { "/etc/security/limits.conf":
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    content => template('sonarqube/limits.conf.erb'),
+    # require => Exec['untar'],
+    # notify  => Service['sonarqube'],
+    mode    => '0664',
+  }
+
+# apply system limits for current session
+  ->
+  exec { 'lims':
+    command      => "bash -c 'ulimit -n 65536' && bash -c 'ulimit -u 2048'",
+#    user         => "${user}",
+  }  
+# restart sysctl service to apply sysctl.conf file
+  ->
   exec { 'sys_ctl':
     command => "sysctl -p/etc/sysctl.conf",
     creates => '/etc/sysctl.conf',
-  }
-
-  ->
-  exec { 'firewall-cmd':
-    command => "firewall-cmd --zone=public --add-port=${dport}/tcp --permanent",
-    notify  => Exec['firewall-reload'],
-  }
-
-  ->
-  exec { 'firewall-reload':
-    command => "firewall-cmd --reload",
-    notify  => Service['firewalld'],
-  }
-
-  ->
-  service { 'firewalld':
-    ensure     => running,
-    enable     => true,
-    hasrestart => true,
-    subscribe  => Exec['firewall-cmd'],
   }
 
   ->
@@ -203,7 +174,27 @@ class sonarqube (
     hasrestart => true,
     hasstatus  => true,
     enable     => true,
-    require    => File["/etc/init.d/${service}"],
+    # require    => File["/etc/init.d/${service}"],
+  }
+
+  ->
+  exec { 'firewall-cmd':
+    command => "firewall-cmd --zone=public --add-port=${dport}/tcp --permanent",
+    # notify  => Exec['firewall-reload'],
+  }
+
+  ->
+  exec { 'firewall-reload':
+    command => "firewall-cmd --reload",
+    # notify  => Service['firewalld'],
+  }
+
+  ->
+  service { 'firewalld':
+    ensure     => running,
+    enable     => true,
+    hasrestart => true,
+    # subscribe  => Exec['firewall-cmd'],
   }
 }
 
