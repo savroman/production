@@ -39,6 +39,7 @@ class postgres (
   package { "${source_url}${uri}":
     ensure   => installed,
     provider => 'yum',
+    #source   => "${source_url}${uri}",
     # before   => Package["${psql}"],
     # notify   => Package["${psql}"],
   }
@@ -79,27 +80,27 @@ class postgres (
     unless  => "psql -c '\\du' | grep '^  *${psql_user}  *|'"
   }
 
-  exec { 'createuser':
-  	command     => "psql -c createuser ${owner}",
-  	user        => "${psql_user}",
-    unless  => "psql -c '\\du' | grep '^  *${owner}  *|'"
-  	#refreshonly => true,
-  }
+  # exec { 'createuser':
+  # 	command     => "psql -c \"createuser ${owner}\"",
+  # 	user        => "${psql_user}",
+  #   unless  => "psql -c '\\du' | grep '^  *${owner}  *|'"
+  # 	#refreshonly => true,
+  # }
 
-  exec { 'createdb':
-  	command     => "psql -c createdb -O ${owner} ${dbname}",
-  	user        => "${psql_user}",
-  	require     => Exec['createuser'],
-    # unless  => "psql -c '\\df' | grep '^  *${dbname}  *|'"
-  }
+  # exec { 'createdb':
+  # 	command     => "psql -c \"createdb -O ${owner} ${dbname}\"",
+  # 	user        => "${psql_user}",
+  # 	require     => Exec['createuser'],
+  #   unless  => "psql -c '\\l' | grep '^  *${dbname}  *|'"
+  # }
 
-  exec { 'alter_owner':
-    command     => "psql -c \"ALTER USER ${owner} with encrypted password '${db_pass}';\"",
-    #creates     => '/file/created',
-    user        => "${psql_user}",
-  	require     => Exec['createdb'],
-    #unless      => 'test param-that-would-be-true',
-  }
+  # exec { 'alter_owner':
+  #   command     => "psql -c \"ALTER USER ${owner} with encrypted password '${db_pass}';\"",
+  #   #creates     => '/file/created',
+  #   user        => "${psql_user}",
+  # 	require     => Exec['createdb'],
+  #   #unless      => 'test param-that-would-be-true',
+  # }
 
   file { "/var/lib/pgsql/${version}/data/pg_hba.conf":
     ensure  => file,
