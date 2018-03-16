@@ -39,6 +39,10 @@ node 'sonar.local' {
     java_se       => 'jdk',
   }
 
+  class { 'postgres':
+    user_host     => 'localhost',
+  }
+
   class { 'sonarqube':
   }
 }
