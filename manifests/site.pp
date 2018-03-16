@@ -54,5 +54,8 @@ node 'zabbix' {
 node 'db'{
   include zabbixagent
 }
-
                         
+node 'balancer' {
+  $web_serv_name_ip=["web1 192.168.56.161", "web2 192.168.56.162"]
+  include haproxy
+}
