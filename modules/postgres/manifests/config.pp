@@ -1,6 +1,0 @@
-
-class postgres::config (
-
-){
-  
-}
