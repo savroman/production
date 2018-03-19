@@ -62,3 +62,7 @@ node 'balancer' {
 node 'db.dev' {
   include mysql
 }
+
+node /^web/ {
+  include role::wb
+}
