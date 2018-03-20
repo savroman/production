@@ -79,7 +79,7 @@ class jenkins (
     enable     => true,
   }
 
-  firewall::openport {'jenkins_port':
-    dport => ${dport}
+  firewall::openport { 'jenkins_port':
+    dport => ${dport},
   }
 }
