@@ -10,7 +10,6 @@ class mysql::configure (
   $bind = '0.0.0.0',
 )
 {
-
   $conf_name = $facts['os']['family'] ? {
     'RedHat' => 'mysql-redhat.cnf.erb',
 }
