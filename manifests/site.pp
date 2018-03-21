@@ -28,7 +28,7 @@ node 'jenkins.local' {
     # version_major => '162',
     # version_minor => 'b12',
     # hash          => '0da788060d494f5095bf8624735fa2f1',
-  }
+  
   #include maven
   include java8
   include jenkins
