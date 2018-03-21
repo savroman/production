@@ -23,7 +23,7 @@ node default {
 # here is the line 32
 
 node 'jenkins.local' {
-  include role::jenkins
+  include role::jenkins::master
   #include maven
 }
 
