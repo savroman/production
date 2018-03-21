@@ -18,7 +18,7 @@ elsif $::osfamily == 'Debian' {
 
 }
 
-$packages = ['tree', 'mc', 'net-tools']
+$packages = ['tree', 'mc', 'net-tools', 'wget', 'git']
 package { $packages:
     ensure       => installed,
 }
