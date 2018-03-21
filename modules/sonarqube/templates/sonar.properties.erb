@@ -14,9 +14,8 @@
 # Permissions to create tables, indices and triggers must be granted to JDBC user.
 # The schema must be created first.
 
-<% if !@jdbc.empty? -%>
-sonar.jdbc.username=<%= @jdbc['username'] %>
-sonar.jdbc.password=<%= @jdbc['password'] %>
+sonar.jdbc.username=<%= @db_user %>
+sonar.jdbc.password=<%= @db_pass %>
 
 <% if @db_provider['mysql'] -%>
 sonar.jdbc.url=jdbc:mysql://<%= @db_host %>:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true&useConfigs=maxPerformance&useSSL=false
@@ -29,22 +28,22 @@ sonar.jdbc.url=jdbc:sqlserver://<%= @db_host %>;databaseName=sonar;integratedSec
 <% elsif @db_provider['mssql_sql'] -%>
 sonar.jdbc.url=jdbc:sqlserver://<%= @db_host %>;databaseName=sonar
 <% elsif @db_provider['embedded'] -%>
-sonar.jdbc.url=jdbc:h2:tcp://localhost:9092/sonar
-<% else -%>
-sonar.jdbc.url=<%= @jdbc['url'] %>
+#jdbc:h2:tcp://localhost:9092/sonar
+sonar.embeddedDatabase.port=9092
 <% end -%>
 
-#sonar.jdbc.maxActive:          <% if @jdbc['max_active'] -%><%= @jdbc['max_active'] %><% else -%>50
+<% if !@jdbc.empty? -%>
+#sonar.jdbc.maxActive=          <% if @jdbc['max_active'] -%><%= @jdbc['max_active'] %><% else -%>50
 #<% end -%>
-#sonar.jdbc.maxIdle:            <% if @jdbc['max_idle'] -%><%= @jdbc['max_idle'] %><% else -%>5
+#sonar.jdbc.maxIdle=            <% if @jdbc['max_idle'] -%><%= @jdbc['max_idle'] %><% else -%>5
 #<% end -%>
-#sonar.jdbc.minIdle:            <% if @jdbc['min_idle'] -%><%= @jdbc['min_idle'] %><% else -%>2
+#sonar.jdbc.minIdle=            <% if @jdbc['min_idle'] -%><%= @jdbc['min_idle'] %><% else -%>2
 #<% end -%>
-#sonar.jdbc.maxWait:            <% if @jdbc['max_wait'] -%><%= @jdbc['max_wait'] %><% else -%>5000
+#sonar.jdbc.maxWait=            <% if @jdbc['max_wait'] -%><%= @jdbc['max_wait'] %><% else -%>5000
 #<% end -%>
-#sonar.jdbc.minEvictableIdleTimeMillis:     <% if @jdbc['min_evictable_idle_time_millis'] -%><%= @jdbc['min_evictable_idle_time_millis'] %><% else -%>600000
+#sonar.jdbc.minEvictableIdleTimeMillis=     <% if @jdbc['min_evictable_idle_time_millis'] -%><%= @jdbc['min_evictable_idle_time_millis'] %><% else -%>600000
 #<% end -%>
-#sonar.jdbc.timeBetweenEvictionRunsMillis:  <% if @jdbc['time_between_eviction_runs_millis'] %><%= @jdbc['time_between_eviction_runs_millis'] -%><% else -%>30000
+#sonar.jdbc.timeBetweenEvictionRunsMillis=  <% if @jdbc['time_between_eviction_runs_millis'] %><%= @jdbc['time_between_eviction_runs_millis'] -%><% else -%>30000
 #<% end -%>
 
 #<% end -%>

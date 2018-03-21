@@ -7,3 +7,13 @@ symbolic-links=0
 
 log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid
+
+### MANAGED BY PUPPET ###
+
+log-bin = mysql-bin
+server-id = <%= @serverid %>
+relay-log = relay-log-slave
+gtid-mode =ON
+enforce-gtid-consistency
+binlog_format = MIXED
+log_slave_updates
