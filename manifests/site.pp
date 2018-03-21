@@ -23,14 +23,14 @@ node default {
 # here is the line 32
 
 node 'jenkins.local' {
-  class { 'java8': 
+  class { 'java8':
     java_se       => 'jdk',
     # version_major => '162',
     # version_minor => 'b12',
     # hash          => '0da788060d494f5095bf8624735fa2f1',
   }
   include maven
-  include jenkins
+  class {'jenkins':}
 }
 
 node 'sonar.local' {
@@ -54,7 +54,7 @@ node 'zabbix' {
 node 'db'{
   include zabbixagent
 }
-                        
+
 node 'balancer' {
   $web_serv_name_ip=["web1 192.168.56.161", "web2 192.168.56.162"]
   include haproxy
