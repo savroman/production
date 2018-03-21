@@ -23,15 +23,8 @@ node default {
 # here is the line 32
 
 node 'jenkins.local' {
-  #class { 'java8':
-  #  java_se       => 'jdk',
-    # version_major => '162',
-    # version_minor => 'b12',
-    # hash          => '0da788060d494f5095bf8624735fa2f1',
-  
+  include role::jenkins
   #include maven
-  include java8
-  include jenkins
 }
 
 node 'sonar.local' {
