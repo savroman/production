@@ -9,5 +9,3 @@
 class mysql::database {
 	
 }
-
-#mysql -u root -pa8+?treAvpDa -e "GRANT REPLICATION SLAVE ON *.* TO 'replication'@'%' IDENTIFIED BY 'replication';"

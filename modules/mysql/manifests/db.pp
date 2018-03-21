@@ -22,7 +22,6 @@ exec {"${database}":
   unless  => "mysql -u root -p'${r_pass}' -e \"SHOW DATABASES;\" | grep ${database}",
   require => [Package['mysql-community-server'], Exec['install_pass']],
 }
-
 }
 
 #mysql -u root -p"$DATABASE_PASS" -e "CREATE DATABASE bugtrckr DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;"
