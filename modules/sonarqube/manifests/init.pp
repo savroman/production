@@ -1,7 +1,6 @@
 # == Class: sonarqube
 #
 class sonarqube (
-  $ensure           = 'installed',
   $version          = '6.7.2',
   $user             = 'sonar',
   $group            = 'sonar',
@@ -13,16 +12,14 @@ class sonarqube (
   $source_url       = 'https://sonarsource.bintray.com/Distribution/sonarqube',
   $source_dir       = '/usr/local/src',
   $arch             = $sonarqube::params::arch,
+  # Connection strings values
   # values allowed for <db_provider> are: 'embedded' , 'mysql' , 'psql' , 'oracle' , 'mssql_ms' , 'mssql_sql'
-  # otherwise $jdbs:url will be provided
+  # in case of "embedded" <db_provider> sets, the <db_host> parameter going to be ignored
   $db_provider      = 'embedded',
   $db_host          = 'localhost',
-
-# ldap and pam are mutually exclusive. Setting $ldap will annihilate the setting of $pam
+  $db_user          = 'sonar',
+  $db_pass          = 'sonar',
   $jdbc             = {
-    url                               => 'jdbc:h2:tcp://localhost:9092/sonar',
-    username                          => 'sonar',
-    password                          => 'sonar',
     max_active                        => '50',
     max_idle                          => '5',
     min_idle                          => '2',
@@ -38,8 +35,8 @@ class sonarqube (
   $zipname        = "${package_name}-${version}.zip"
   $ziproute       = "${source_dir}/${zipname}"
   $installdir = "${inst_root}/${service}"
-  $extensions_dir = "${user_home}/extensions"
-  $plugin_dir = "${extensions_dir}/plugins"
+  # $extensions_dir = "${user_home}/extensions"
+  # $plugin_dir = "${extensions_dir}/plugins"
 
   $script = "${installdir}/bin/${arch}/sonar.sh"
   $pid_d  = "${installdir}/bin/${arch}/./SonarQube.pid"
@@ -55,11 +52,6 @@ class sonarqube (
   package { 'wget':
     ensure => installed,
     before => Exec['download-sonar'],
-  }
-
-  package { 'unzip':
-    ensure => present,
-    before => Exec['untar'],
   }
 
   group { "${group}":
@@ -81,21 +73,16 @@ class sonarqube (
     creates   => "${ziproute}",
   }
 
-  # Sonar home
-  # file { $user_home:
-  #   ensure => directory,
-  #   mode   => '0740',
-  # }
-  # ->
-  # file { "${inst_root}/${package_name}-${version}":
-  #   ensure  => directory,
-  # }
-  # ->
+  package { 'unzip':
+    ensure => present,
+    before => Exec['untar'],
+  }
+
   # ===== Install SonarQube =====
   exec { 'untar':
     command => "unzip -o ${ziproute} -d ${inst_root} && chown -R ${user}:${group} ${inst_root}/${package_name}-${version} && chown -R ${user}:${group} ${user_home}",
     creates => "${inst_root}/${package_name}-${version}/bin",
-    notify  => Service['sonarqube'],
+    # notify  => Service['sonarqube'],
   }
   ->
   file { "${installdir}":
@@ -104,23 +91,17 @@ class sonarqube (
     notify => Service['sonarqube'],
   }
   ->
-  # file { $script:
-  #   mode    => '0755',
-  #   content => template('sonarqube/sonar.sh.erb'),
-  # }
-  # ->
-  file { "/etc/init.d/${service}":
+   file { "/etc/init.d/${service}":
     ensure => link,
     target => $script,
   }
-
   ->
   # Sonar configuration files
   file { "${installdir}/conf/sonar.properties":
     ensure  => file,
     content => template('sonarqube/sonar.properties.erb'),
     require => Exec['untar'],
-    # notify  => Service['sonarqube'],
+    notify  => Service['sonarqube'],
     mode    => '0664',
   }
 
@@ -129,7 +110,7 @@ class sonarqube (
     ensure  => file,
     content => template('sonarqube/sonar.service.erb'),
     require => Exec['untar'],
-    # notify  => Service['sonarqube'],
+    notify  => Service['sonarqube'],
     mode    => '0664',
   }
 
@@ -141,6 +122,7 @@ class sonarqube (
     content => template('sonarqube/sysctl.conf.erb'),
     require => Exec['untar'],
     mode    => '0664',
+    notify  => Service['sonarqube'],
   }
 
   ->
@@ -150,7 +132,7 @@ class sonarqube (
     group   => 'root',
     content => template('sonarqube/limits.conf.erb'),
     # require => Exec['untar'],
-    # notify  => Service['sonarqube'],
+    notify  => Service['sonarqube'],
     mode    => '0664',
   }
 
@@ -159,6 +141,7 @@ class sonarqube (
   exec { 'lims':
     command      => "bash -c 'ulimit -n 65536' && bash -c 'ulimit -u 2048'",
 #    user         => "${user}",
+    notify  => Service['sonarqube'],
   }  
 # restart sysctl service to apply sysctl.conf file
   ->
@@ -180,13 +163,13 @@ class sonarqube (
   ->
   exec { 'firewall-cmd':
     command => "firewall-cmd --zone=public --add-port=${dport}/tcp --permanent",
-    # notify  => Exec['firewall-reload'],
+    notify  => Exec['firewall-reload'],
   }
 
   ->
   exec { 'firewall-reload':
     command => "firewall-cmd --reload",
-    # notify  => Service['firewalld'],
+    notify  => Service['firewalld'],
   }
 
   ->
@@ -194,7 +177,6 @@ class sonarqube (
     ensure     => running,
     enable     => true,
     hasrestart => true,
-    # subscribe  => Exec['firewall-cmd'],
   }
 }
 
