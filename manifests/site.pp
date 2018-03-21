@@ -61,9 +61,16 @@ node 'balancer' {
   $web_serv_name_ip=["web1 192.168.56.161", "web2 192.168.56.162"]
   include haproxy
 }
-node 'db.dev' {
-  include mysql
+
+node 'mysqlmaster.dev' {
+  $serverid="1"
+  include roles::master
 }
+node 'mysqlslave.dev' {
+  $serverid="2"
+  include roles::slave
+}
+
 
 node /^web/ {
   include role::wb
