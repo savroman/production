@@ -20,9 +20,9 @@ node default {
   # Example:
   #   class { 'my_class': }
 }
-# here is the line 32
+# here is the line 23
 
-node 'jenkins.local' {
+node 'jenkin' {
   class { 'java8': 
     java_se       => 'jdk',
     # version_major => '162',
@@ -33,7 +33,7 @@ node 'jenkins.local' {
   include jenkins
 }
 
-node 'sonar.local' {
+node 'sonar' {
 
   class { 'java8':
     java_se       => 'jdk',
@@ -44,6 +44,8 @@ node 'sonar.local' {
   }
 
   class { 'sonarqube':
+    db_provider => 'psql',
+    db_host     => 'localhost',
   }
 
 }
