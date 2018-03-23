@@ -1,13 +1,16 @@
 # maven3
 #
-# A description of what this class does
-#
-# @summary A short summary of the purpose of this class
+# Install Apache maven 3.x.x
 #
 # @example
-#   include maven3
+#  include maven3
+#
+#  class { 'maven3': 
+#    version => '3.5.3',
+#  }
+
 class maven3 (
-  $version = '3.2.5',
+  $version = '3.5.3',
   ){
 
   $archive = "apache-maven-${version}-bin.tar.gz"
@@ -17,7 +20,7 @@ class maven3 (
 
   exec { 'upload_maven_archive':
     command => "wget ${source}",
-    path    => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+    path    => '/bin:/sbin:/usr/bin:/usr/sbin:',
     cwd     => "${load_dir}",
     creates => "${archive_path}",
     before  => Exec['maven-untar'],
@@ -27,7 +30,7 @@ class maven3 (
     command => "tar xf ${archive_path}",
     cwd     => '/opt',
     creates => "/opt/apache-maven-${version}",
-    path    => ['/bin','/usr/bin'],
+    path    => '/bin:/sbin:/usr/bin:/usr/sbin:',
   }
 
   file { '/usr/bin/mvn':
@@ -35,8 +38,4 @@ class maven3 (
     target  => "/opt/apache-maven-${version}/bin/mvn",
     require => Exec['maven-untar'],
   }
-
-  #file { '/usr/local/bin/mvn':
-  #  ensure  => absent,
-  #}
 }
