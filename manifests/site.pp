@@ -25,7 +25,7 @@ node default {
 
 node 'jenkins.local' {
   include role::jenkins::master
-  #include maven
+  include maven3
 }
 
 node 'sonar' {
