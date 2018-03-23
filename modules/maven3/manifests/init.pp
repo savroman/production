@@ -13,7 +13,7 @@ class maven3 (
   $archive = "apache-maven-${version}-bin.tar.gz"
   $source = "http://archive.apache.org/dist/maven/maven-3/${version}/binaries/apache-maven-${version}-bin.tar.gz"
   $load_dir = "/tmp/"
-  $archive_path = ${load_dir}${archive}
+  $archive_path = "${load_dir}${archive}"
 
   exec { 'upload_maven_archive':
     command => "wget ${source}",
