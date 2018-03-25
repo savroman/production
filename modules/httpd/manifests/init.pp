@@ -9,7 +9,7 @@
 class httpd {
   package {'httpd':
     ensure => installed,
-    before => File['/etc/httpd/edit_httpd.sh'],
+    before => File['/etc/httpd/edit_httpdconf.sh'],
   }
 
   file { '/etc/httpd/edit_httpdconf.sh':
