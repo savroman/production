@@ -42,7 +42,7 @@ class jenkins (
     enable     => true,
   }
 
-  base::firewall {'jenkins':
+  ::base::firewall {'jenkins':
     dport => "${dport}",
   }
 }

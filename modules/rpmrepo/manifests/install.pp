@@ -9,7 +9,7 @@
 class rpmrepo::install {
   include httpd
 
-  base::firewall {'rpmrepo':
+  ::base::firewall {'rpmrepo':
     dport => '80',
   }
 
