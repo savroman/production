@@ -43,6 +43,6 @@ class jenkins (
   }
 
   class {'base::firewall':
-    dport => ${dport},
+    dport => "${dport}",
   }
 }
