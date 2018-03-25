@@ -21,19 +21,19 @@ define base::firewall (
   exec { "firewall-cmd${title}":
     command => "firewall-cmd --zone=public --add-port=${dport}/tcp --permanent",
     path    => "/usr/bin/",
-    before  => Exec['firewall-reload'],
+    before  => Exec["firewall-reload${title}"],
   }
 
   exec { "firewall-reload${title}":
     command => "firewall-cmd --reload",
     path    => "/usr/bin/",
-    before  => Service['firewalld'],
+    before  => Service["firewalld${title}"],
   }
 
   service { "firewalld${title}":
     ensure     => running,
     enable     => true,
     hasrestart => true,
-    subscribe  => Exec['firewall-cmd'],
+    subscribe  => Exec["firewall-cmd${title}""],
   }
 }
