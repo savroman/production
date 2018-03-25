@@ -34,6 +34,6 @@ define base::firewall (
     ensure     => running,
     enable     => true,
     hasrestart => true,
-    subscribe  => Exec["firewall-cmd${title}""],
+    subscribe  => Exec["firewall-cmd${title}"],
   }
 }
