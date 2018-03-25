@@ -9,6 +9,10 @@
 class rpmrepo::install {
   include httpd
 
+  ::base::firewall {'rpmrepo':
+    dport => '80',
+  }
+
   file { '/var/www/html/repo':
     ensure => directory,
     mode => '0644',
