@@ -12,9 +12,12 @@
 #    }
 
 
-class base::firewall (
+# == Define: base::firewall
+#
+define base::firewall (
   $dport=''
   ) {
+
   exec { 'firewall-cmd':
     command => "firewall-cmd --zone=public --add-port=${dport}/tcp --permanent",
     path    => "/usr/bin/",
