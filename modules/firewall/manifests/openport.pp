@@ -29,3 +29,4 @@ define firewall::openport (
     command => "firewall-cmd --reload",
     path    => "/usr/bin/",
   }
+}

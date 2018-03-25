@@ -17,7 +17,7 @@
 # == Class: firewall
 #
 class firewall {
-  service { "firewalld${title}":
+  service { "firewalld":
     ensure     => running,
     enable     => true,
     hasrestart => true,
