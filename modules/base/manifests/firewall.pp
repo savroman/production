@@ -1,8 +1,20 @@
-# == Class: firewall
+# Class: base::firewall
+# ===========================
 #
-class jenkins::firewall (
-  $dport=$jenkins::dport
-  ){
+# Use it to open ports on severs
+#
+# @ param dport
+#    enter the number of port you wish to open
+#
+# @example
+#    class { 'base::firewall':
+#      dport => '80',
+#    }
+
+
+class base::firewall (
+  $dport=''
+  ) {
   exec { 'firewall-cmd':
     command => "firewall-cmd --zone=public --add-port=${dport}/tcp --permanent",
     path    => "/usr/bin/",

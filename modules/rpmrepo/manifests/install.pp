@@ -8,6 +8,10 @@
 #   include rpmrepo::install
 class rpmrepo::install {
   include httpd
+  
+  class base::firewall {
+    dport => '80',
+  }
 
   file { '/var/www/html/repo':
     ensure => directory,
