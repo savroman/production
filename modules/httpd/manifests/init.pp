@@ -9,16 +9,26 @@
 class httpd {
   package {'httpd':
     ensure => installed,
-    #before => File['/etc/httpd.conf'],
+    before => File['/etc/httpd/edit_httpd.sh'],
   }
-  #file {'/etc/httpd.conf':
-  #  ensure  => file,
-  #  owner   => 'root',
-  #  content => template('httpd/httpd.conf.epp'),
-  #}
+
+  file { '/etc/httpd/edit_httpd.sh':
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode => '0755',
+    content => "puppet:///modules/httpd/files/edit_httpdconf.sh",
+    notify => Exec['edit_httpd.conf'],
+  }
+
+  exec {'edit_httpd.conf':
+    command  => '/etc/httpd/edit_httpd.sh',
+    #notify   => Service['httpd']
+  }
+
   service {'httpd':
     ensure    => running,
     enable    => true,
-    #subscribe => File['/etc/httpd.conf'],
+    subscribe => Exec['edit_httpd.conf'],
   }
 }
