@@ -17,7 +17,7 @@ class httpd {
     owner  => 'root',
     group  => 'root',
     mode => '0755',
-    content => "puppet:///modules/httpd/files/edit_httpdconf.sh",
+    content => "puppet:///modules/httpd/edit_httpdconf.sh",
     notify => Exec['edit_httpd.conf'],
   }
 
