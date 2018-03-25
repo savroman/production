@@ -14,9 +14,10 @@
 
 # == Define: base::firewall
 #
-define base::firewall (
+define firewall::openport (
   $dport='',
   ) {
+  require firewall
 
   exec { "firewall-cmd${title}":
     command => "firewall-cmd --zone=public --add-port=${dport}/tcp --permanent",
@@ -27,13 +28,5 @@ define base::firewall (
   exec { "firewall-reload${title}":
     command => "firewall-cmd --reload",
     path    => "/usr/bin/",
-    before  => Service["firewalld${title}"],
-  }
-
-  service { "firewalld${title}":
-    ensure     => running,
-    enable     => true,
-    hasrestart => true,
-    subscribe  => Exec["firewall-cmd${title}"],
   }
 }

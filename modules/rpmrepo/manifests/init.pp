@@ -1,6 +1,7 @@
 # rpmrepo
+# ===================
 #
-# A description of what this class does
+# Crete custom rpm repository for project build artifacts
 #
 # @summary A short summary of the purpose of this class
 #

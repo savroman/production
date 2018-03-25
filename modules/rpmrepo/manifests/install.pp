@@ -1,23 +1,29 @@
 # rpmrepo::install
+# ==========================
 #
-# A description of what this class does
+# Install software required to build a repositiry
 #
-# @summary A short summary of the purpose of this class
+# @summary This class add to node next things:
+#  - Apache Web Server
+#  - createrepo tool
 #
 # @example
 #   include rpmrepo::install
 class rpmrepo::install {
   include httpd
 
-  ::base::firewall {'rpmrepo':
+  file { '/var/www/html/repo':
+    ensure => directory,
+    mode   => '0644',
+  }
+
+  firewall::openport {'rpmrepo':
     dport => '80',
   }
 
-  file { '/var/www/html/repo':
-    ensure => directory,
-    mode => '0644',
+  package { 'createrepo':
+    ensure => installed,
   }
-
   #file { '/etc/httpd/conf.d/welcome.conf':
     #ensure => absent,
     #before

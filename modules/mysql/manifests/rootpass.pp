@@ -8,7 +8,7 @@
 #   include mysql::rootpass
 class mysql::rootpass (
   $root_pass = 'a8+?treAvpDa',
-  $pass_cmd  = "mysqladmin -u root --password=$(grep 'temporary password' /var/log/mysqld.log|cut -d \":\" -f 4|cut -d ' ' -f 2) password '${root_pass}'",
+  $pass_cmd  = "mysqladmin -u root --password=$(grep 'temporary password' /var/log/mysqld.log| awk '{print $11}') password '${root_pass}'",
 )
 {
 
