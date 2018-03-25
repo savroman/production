@@ -12,18 +12,18 @@ class httpd {
     before => File['/etc/httpd/edit_httpd.sh'],
   }
 
-  file { '/etc/httpd/edit_httpd.sh':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode => '0755',
-    content => "puppet:///modules/httpd/edit_httpdconf.sh",
-    notify => Exec['edit_httpd.conf'],
+  file { '/etc/httpd/edit_httpdconf.sh':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => file( 'httpd/edit_httpdconf.sh'),
+    notify  => Exec['edit_httpd.conf'],
   }
 
   exec {'edit_httpd.conf':
-    command  => '/etc/httpd/edit_httpd.sh',
-    #notify   => Service['httpd']
+    command  => '/etc/httpd/edit_httpdconf.sh',
+    path     => '/bin:/sbin:/usr/bin:/usr/sbin'
   }
 
   service {'httpd':
