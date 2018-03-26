@@ -21,12 +21,15 @@ class rpmrepo::install {
     dport => '80',
   }
 
-  package { 'createrepo':
+  $fpm_needs= ['ruby-devel', 'gcc', 'make', 'rpm-build', 'rubygems',]
+
+  package { ${fpm_needs}:
     ensure => installed,
   }
-  #file { '/etc/httpd/conf.d/welcome.conf':
-    #ensure => absent,
-    #before
-  #}
 
+  package { 'fpm':
+    ensure          => installed,
+    provider        => 'gem',
+    install_options => ['--no-ri', '--no-rdoc'],
+  }
 }
