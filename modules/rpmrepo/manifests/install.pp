@@ -30,6 +30,6 @@ class rpmrepo::install {
   package { 'fpm':
     ensure          => installed,
     provider        => 'gem',
-    install_options => ['--no-ri', '--no-rdoc'],
+    #install_options => ['--no-ri', '--no-rdoc'],
   }
 }
