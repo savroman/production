@@ -24,7 +24,7 @@ class rpmrepo::install {
   $fpm_needs= ['ruby-devel', 'gcc', 'make', 'rpm-build', 'rubygems',]
 
   package { $fpm_needs:
-    ensure => installed,
+    ensure => latest,
   }
 
   package { 'fpm':
