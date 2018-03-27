@@ -21,7 +21,7 @@ class rpmrepo::install {
     dport => '80',
   }
 
-  $fpm_needs= ['ruby-devel', 'gcc', 'make', 'rpm-build', 'rubygems',]
+  $fpm_needs= ['ruby', 'ruby-devel', 'gcc', 'make', 'rpm-build', 'rubygems',]
 
   package { $fpm_needs:
     ensure => latest,
