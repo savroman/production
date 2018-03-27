@@ -25,6 +25,12 @@ class rpmrepo::install {
 
   package { $fpm_needs:
     ensure => latest,
+    before => Package[fpm],
+  }
+
+  class { '::ruby':
+    gems_version => 'latest',
+    before => Package[fpm],
   }
 
   package { 'fpm':
