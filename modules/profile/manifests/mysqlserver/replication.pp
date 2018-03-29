@@ -12,6 +12,7 @@ class profile::mysqlserver::replication (
 
 )
 { 
+include stdlib
 include mysql
 include firewall
 
