@@ -1,4 +1,4 @@
-class profiles::mysqlserver::users {
+class profile::mysqlserver::users {
 include mysql
 
 mysql::db { 'bugtrckr':

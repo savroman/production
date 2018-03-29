@@ -1,4 +1,4 @@
-class profiles::mysqlserver::master (
+class profile::mysqlserver::master (
 # $serverid               = "1", # Provide the Server ID = 1.2.3.... etc
 # $datadir                = "/var/lib/mysql", # can also be defined under my.cnf
   $port                   = "3306", # can also be defined under my.cnf

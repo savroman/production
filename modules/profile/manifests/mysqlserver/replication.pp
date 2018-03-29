@@ -1,4 +1,4 @@
-class profiles::mysqlserver::replication (
+class profile::mysqlserver::replication (
 # $serverid = "2", # Provide the Server ID = 1.2.3.... etc
   $datadir                = "/var/lib/mysql", # can also be defined under my.cnf
 # $port                   = "3306", # can also be defined under my.cnf
