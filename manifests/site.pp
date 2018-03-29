@@ -22,15 +22,9 @@ node default {
 }
 # here is the line 23
 
-node 'jenkin' {
-  class { 'java8': 
-    java_se       => 'jdk',
-    # version_major => '162',
-    # version_minor => 'b12',
-    # hash          => '0da788060d494f5095bf8624735fa2f1',
-  }
-  include maven
-  include jenkins
+
+node 'jenkins.local' {
+  include role::jenkins::master
 }
 
 node 'sonar' {
@@ -56,14 +50,21 @@ node 'zabbix' {
 node 'db'{
   include zabbixagent
 }
-                        
+
 node 'balancer' {
   $web_serv_name_ip=["web1 192.168.56.161", "web2 192.168.56.162"]
   include haproxy
 }
-node 'db.dev' {
-  include mysql
+
+node 'db.if083' {
+  $serverid="1"
+  include role::master
 }
+node 'dbslave.if083' {
+  $serverid="2"
+  include role::slave
+}
+
 
 node /^web/ {
   include role::wb
