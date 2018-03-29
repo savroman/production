@@ -1,6 +1,6 @@
 class profiles::mysqlserver::users {
 include mysql
-}
+
 mysql::db { 'bugtrckr':
   database => 'bugtrckr',
   charset  => 'utf8',
@@ -25,7 +25,7 @@ mysql::users { 'zabbix':
   host      => '%',
   grant     => 'ALL',
 }
-
+}
 
 
 
