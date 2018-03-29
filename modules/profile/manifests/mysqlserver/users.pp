@@ -6,7 +6,7 @@ mysql::db { 'bugtrckr':
   charset  => 'utf8',
   collate  => 'utf8_unicode_ci',
 }
-mysql::db { 'zabbix':
+mysql::db { 'zabbix_db':
   database => 'zabbix',
   charset  => 'utf8',
   collate  => 'utf8_unicode_ci',
@@ -18,8 +18,8 @@ mysql::users { 'tomcat':
   host      => '%',
   grant     => 'ALL',
 }
-mysql::users { 'zabbix': 
-  table     => '*', # GRANT ALL ON ${table}.*
+mysql::users { 'zabbix_user': 
+  table     => 'zabbix', # GRANT ALL ON ${table}.*
   user      => 'zabbix',
   user_pass => '3a66ikc_DB',
   host      => '%',
