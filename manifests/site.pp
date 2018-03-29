@@ -56,11 +56,11 @@ node 'balancer' {
   include haproxy
 }
 
-node 'mysqlmaster.dev' {
+node 'db.if083' {
   $serverid="1"
   include roles::master
 }
-node 'mysqlslave.dev' {
+node 'dbslave.if083' {
   $serverid="2"
   include roles::slave
 }
