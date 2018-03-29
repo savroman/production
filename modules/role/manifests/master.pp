@@ -1,8 +1,8 @@
 # Class: name
 #
 #
-class roles::master {
-	include profiles::mysqlserver::master
-	include profiles::mysqlserver::users
+class role::master {
+	include profile::mysqlserver::master
+	include profile::mysqlserver::users
 	# resources
 }

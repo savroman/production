@@ -1,7 +1,7 @@
 # Class: name
 #
 #
-class roles::slave {
-	include profiles::mysqlserver::replication
+class role::slave {
+	include profile::mysqlserver::replication
 	# resources
 }
