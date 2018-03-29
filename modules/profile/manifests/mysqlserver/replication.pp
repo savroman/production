@@ -18,7 +18,6 @@ include firewall
 firewall::openport {'mysqlslave':
     dport => $master_port,
   }
-}
 
   if $is_slave {
     validate_ip_address($master_ip)  # IP Address must be set to identify the master

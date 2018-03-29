@@ -16,7 +16,7 @@ include firewall
 firewall::openport {'mysqlmaster':
     dport => $port,
   }
-}
+
 mysql::db { 'bugtrckr':
   database => 'bugtrckr',
   charset  => 'utf8',
