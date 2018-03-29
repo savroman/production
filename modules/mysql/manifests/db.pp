@@ -17,7 +17,7 @@ $r_pass = $mysql::rootpass::root_pass
 Exec {
     path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
 }
-exec {"${database}":
+exec {"${title}":
   command => "mysql -u root -p'${r_pass}' -e \"CREATE DATABASE ${database} DEFAULT CHARSET = ${charset} COLLATE = ${collate};\"",
   unless  => "mysql -u root -p'${r_pass}' -e \"SHOW DATABASES;\" | grep ${database}",
   require => [Package['mysql-community-server'], Exec['install_pass']],

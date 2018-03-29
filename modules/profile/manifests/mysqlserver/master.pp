@@ -17,11 +17,6 @@ firewall::openport {'mysqlmaster':
     dport => $port,
   }
 
-mysql::db { 'bugtrckr':
-  database => 'bugtrckr',
-  charset  => 'utf8',
-  collate  => 'utf8_unicode_ci',
-}
 if $is_master {
     mysql::users { '${replica_user}': 
       table     => '*', # GRANT ALL ON ${table}.*
