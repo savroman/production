@@ -10,6 +10,7 @@ class sonarqube (
   $inst_root        = '/usr/local',
   $dport            = 9000,
   $source_url       = 'https://sonarsource.bintray.com/Distribution/sonarqube',
+  $coockies         = '--no-check-certificate',
   $source_dir       = '/usr/local/src',
   $arch             = $sonarqube::params::arch,
   # Connection strings values
@@ -68,7 +69,7 @@ class sonarqube (
   }
   ->
   exec { 'download-sonar':
-    command      => "wget  ${source_url}/${zipname} -O ${ziproute}",
+    command      => "wget ${coockies} ${source_url}/${zipname} -O ${ziproute} ",
     cwd       => "${source_dir}",
     creates   => "${ziproute}",
   }

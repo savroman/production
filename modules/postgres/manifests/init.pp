@@ -19,7 +19,8 @@ class postgres (
 
 ){
   
-  $pgsql            = 'postgresql96'
+  $short_vers       = regsubst($version,'(\D)','')
+  $pgsql            = "postgresql${short_vers}"
   $psql_pass        = "${admin_pass}"
   $psql_user        = 'postgres'
   $psql_group       = 'postgres'
@@ -31,46 +32,59 @@ class postgres (
 
   case $::osfamily {
     'RedHat', 'Linux': {
-      $uri  = 'yum/9.6/redhat/rhel-7-x86_64/pgdg-centos96-9.6-3.noarch.rpm'
+      $uri  = "yum/${version}/redhat/rhel-7-x86_64/pgdg-centos${short_vers}-${version}-3.noarch.rpm"
     }
     default: {fail("Unsupported OS: ${::osfamily}.  Implement me?")}
   }
 
-  package { "${source_url}${uri}":
-    ensure   => installed,
-    provider => 'yum',
+  exec { 'psql_repo':
+    command => "yum -y install ${source_url}${uri}",
+    creates => "/etc/yum.repos.d/pgdg-${short_vers}-centos.repo",
+    user    => 'root',
+    # unless  => "/etc/yum.repos.d/pgdg-${short_vers}-centos.repo",
+    #refreshonly => true,
   }
+  # package { "${source_url}${uri}":
+  #   ensure   => installed,
+  #   provider => 'yum',
+  # }
   ->
   package { "${pgsql}":
-    ensure   => installed,
+    ensure   => $ensure,
     provider => 'yum',
   }
   ->
   package { "${pgsql}-server":
-    ensure   => installed,
+    ensure   => $ensure,
     provider => 'yum',
   }
 
   exec { 'initdb':
-    command  => '/usr/pgsql-9.6/bin/postgresql96-setup initdb',
-    # notify       => Service['postgresql-9.6'],
+    # command     => "psql -c \"initdb;\"",
+    # user        => "${psql_user}",
+    command  => "/usr/pgsql-${version}/bin/postgresql${short_vers}-setup initdb",
+    # onliif   => "test ! -d /var/lib/pgsql/9.6/data/base"
+    # command  => 'postgresql96-setup initdb',
+    # cwd      => '/usr/pgsql-9.6/bin/',
+    creates  => "/var/lib/pgsql/${version}/data/base/",
+    # notify       => Service["postgresql-${version}"],
   }  
 
   file { "/var/lib/pgsql/${version}/data/pg_hba.conf":
     ensure  => file,
     mode    => '0600',
-    content => template('postgres/pg_hba.conf.erb'),
-    notify  => Service['postgresql-9.6'],
+    content => template('postgres/pg_hba.conf.erb'), 
+    notify  => Service["postgresql-${version}"],
   }
 
   file { "/var/lib/pgsql/${version}/data/postgresql.conf":
     ensure  => file,
     mode    => '0600',
     content => template('postgres/postgresql.conf.erb'),
-    notify  => Service['postgresql-9.6'],
+    notify  => Service["postgresql-${version}"],
   }
 
-  service { 'postgresql-9.6':
+  service { "postgresql-${version}":
   	enable      => true,
   	ensure      => running,
   	hasrestart  => true,
