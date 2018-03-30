@@ -43,6 +43,6 @@ class jenkins (
   }
 
   firewall::openport {'jenkins':
-    dport => "${dports}",
+    dports => "${dports}",
   }
 }
