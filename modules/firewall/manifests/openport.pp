@@ -20,7 +20,7 @@ define firewall::openport (
   require firewall
 
   $dports.each |String $dport| {
-    exec { "firewall-cmd${dport}":
+    exec { "firewall-cmd-${dport}":
       command => "firewall-cmd --zone=public --add-port=${dport}/tcp --permanent",
       path    => "/usr/bin/",
       before  => Exec["firewall-reload${title}"],
