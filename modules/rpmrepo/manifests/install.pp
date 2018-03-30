@@ -21,21 +21,22 @@ class rpmrepo::install {
     dport => '80',
   }
 
-  $fpm_needs= ['ruby', 'ruby-devel', 'gcc', 'make', 'rpm-build', 'rubygems',]
+  $fpm_needs= ['ruby-devel', 'gcc', 'make', 'rpm-build', 'rubygems',]
 
   package { $fpm_needs:
     ensure => latest,
-    before => Package[fpm],
+    before => Exec[gem_update],
   }
 
-  class { '::ruby':
-    gems_version => 'latest',
-    before => Package[fpm],
+  exec { 'gem_update':
+    command => 'gem update --system',
+    path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+    before  => Package[fpm],
   }
 
   package { 'fpm':
-    ensure          => installed,
-    provider        => 'gem',
+    ensure   => installed,
+    provider => 'gem',
     #install_options => ['--no-ri', '--no-rdoc'],
   }
 }
