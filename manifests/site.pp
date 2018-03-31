@@ -81,7 +81,7 @@ node 'dbslave.if083' {
 
 
 node /^web/ {
-  include role::wb
+  include role::web
 }
 
 node 'rsyslog' {
