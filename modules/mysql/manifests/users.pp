@@ -7,7 +7,7 @@
 # @example
 #   mysql::users { 'namevar': }
 define mysql::users(
-	String $table,
+  String $table,
   String $user,
   String $user_pass,
   String $host,

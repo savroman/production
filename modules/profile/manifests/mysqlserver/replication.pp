@@ -1,7 +1,7 @@
 class profile::mysqlserver::replication (
 # $serverid = "2", # Provide the Server ID = 1.2.3.... etc
   $datadir                = "/var/lib/mysql", # can also be defined under my.cnf
-# $port                   = "3306", # can also be defined under my.cnf
+  $port                   = ['3306'], # can also be defined under my.cnf
 # $bind_address           = "0.0.0.0",  # can also be defined under my.cnf
   $replica_user           = "replication", # For master, what is the replication account
   $replica_password       = "Pr0m3Teus!", # Replication User password
@@ -17,7 +17,7 @@ include mysql
 include firewall
 
 firewall::openport {'mysqlslave':
-    dport => $master_port,
+    dports => $port,
   }
 
   if $is_slave {

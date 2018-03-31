@@ -1,7 +1,7 @@
 class profile::mysqlserver::master (
 # $serverid               = "1", # Provide the Server ID = 1.2.3.... etc
 # $datadir                = "/var/lib/mysql", # can also be defined under my.cnf
-  $port                   = "3306", # can also be defined under my.cnf
+  $port                   = ['3306'], # can also be defined under my.cnf
 # $bind_address           = "0.0.0.0",  # can also be defined under my.cnf
   $is_master              = true, # True if the node is master
   $replica_user           = "replication", # For master, what is the replication account
@@ -14,7 +14,7 @@ include mysql
 include firewall
 
 firewall::openport {'mysqlmaster':
-    dport => $port,
+    dports => $port,
   }
 
 if $is_master {
