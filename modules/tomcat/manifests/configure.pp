@@ -1,4 +1,4 @@
-# Class: tomcat
+# Class: tomcat::configure defines the configuration of Tomcat7
 #
 #
 class tomcat::configure 

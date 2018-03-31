@@ -1,5 +1,5 @@
-# Class: tomcat
 #
+# Class: tomcat::install defines the setup stage of httpd and Tomcat installation
 #
 class tomcat::install 
 (
