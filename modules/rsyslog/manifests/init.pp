@@ -43,45 +43,22 @@
 # Copyright 2018 oleksdiam
 #
 class rsyslog (
-  
-  $log_proto = 'udp'
-  $dport     = '514'
 
-
-
-
+  $log_proto = 'udp',
+  $dport     = '514',
 ){
 
-  Exec {
-    path => '/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/bin',
-  	user => 'root',
-  }
-
-  service { 'rsyslog':
-  	enable      => true,
-  	ensure      => running,
-  	#hasrestart => true,
-  	#hasstatus  => true,
-  	#require    => Class["config"],
-  }
- 
-}
-
-
-  # case $::osfamily {
-  #   'RedHat': {
-  #     case $::operatingsystem {
-  #       'RedHat', 'CentOS', 'OracleLinux', 'Scientific', 'OEL', 'SLC', 'CloudLinux': {
-  #         if (versioncmp($::operatingsystemrelease, '5.0') < 0) {
-  #           $jdk_package = 'java-1.6.0-sun-devel'
-  #           $jre_package = 'java-1.6.0-sun'
-  #           $java_home   = '/usr/lib/jvm/java-1.6.0-sun/jre/'
-  #         }
-  #       }
-  #       default: { fail("unsupported platform ${::operatingsystem}") }
-  #     }
-  #   }
-  #   default: { fail("unsupported platform ${::osfamily}") }
+  # Exec {
+  #   path => '/usr/bin:/usr/sbin:/bin:/sbin:/usr/local/bin',
+  # 	user => 'root',
   # }
 
-   
+  # service { 'rsyslog':
+  # 	enable      => true,
+  # 	ensure      => running,
+  # 	#hasrestart => true,
+  # 	#hasstatus  => true,
+  # 	#require    => Class["config"],
+  # }
+
+}

@@ -9,7 +9,7 @@
 class jenkins (
   $repo_url = 'https://pkg.jenkins.io/redhat-stable',
   $key_url  = 'https://pkg.jenkins.io/redhat-stable/jenkins.io.key',
-  $dport = '8080'
+  $dports = ['8080', '9000'],
   ){
 
   yumrepo { 'jenkins':
@@ -43,6 +43,6 @@ class jenkins (
   }
 
   firewall::openport {'jenkins':
-    dport => "${dport}",
+    dports => $dports,
   }
 }

@@ -18,15 +18,25 @@ class rpmrepo::install {
   }
 
   firewall::openport {'rpmrepo':
-    dport => '80',
+    dports => '80',
   }
 
-  package { 'createrepo':
-    ensure => installed,
-  }
-  #file { '/etc/httpd/conf.d/welcome.conf':
-    #ensure => absent,
-    #before
-  #}
+  $fpm_needs= ['ruby-devel', 'gcc', 'make', 'rpm-build', 'rubygems',]
 
+  package { $fpm_needs:
+    ensure => latest,
+    before => Exec[gem_update],
+  }
+
+  exec { 'gem_update':
+    command => 'gem update --system',
+    path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+    before  => Package[fpm],
+  }
+
+  package { 'fpm':
+    ensure   => installed,
+    provider => 'gem',
+    #install_options => ['--no-ri', '--no-rdoc'],
+  }
 }
