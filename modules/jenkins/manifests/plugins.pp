@@ -17,11 +17,12 @@
 define jenkins::plugins (
   $plugins = undef,
   ){
-    $plugins.each |String $plugin|
+  $plugins.each |String $plugin| {
     exec { "install_${plugin}":
       command => "wget http://updates.jenkins-ci.org/download/plugins/latest${plugin}.hpi",
       path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
       cwd     => '/var/lib/jenkins/plugins',
       creates => "/var/lib/jenkins/plugins/${plugin}.hpi",
     }
+  }
 }
