@@ -20,18 +20,24 @@ class jenkins::install {
   }
 
   exec { 'add_gpg_key' :
-    path    => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-    command => "rpm --import ${jenkins::key_url}",
+    path     => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+    command  => "rpm --import ${jenkins::key_url}",
     before   => Package[jenk_inst],
     notify   => Package[jenk_inst],
   }
 
   package { 'jenk_inst':
-    name   => 'jenkins',
-    ensure => installed,
+    name     => 'jenkins',
+    ensure   => installed,
     provider => 'yum',
     notify   => Service[jenkins],
   }
+
+  jenkins::plugins {'BugTrckr':
+    plugins  => $jenkins::plugins,
+    notify   => Service[jenkins],
+  }
+
 
   service { 'jenkins':
     ensure     => running,
