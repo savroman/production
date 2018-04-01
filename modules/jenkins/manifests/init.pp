@@ -18,6 +18,11 @@ class jenkins (
     dports => $dports,
   }
 
+  file { '/var/lib/jenkins/jobs/BugTrckr/':
+    ensure => directory,
+    mode => '0644',
+  }
+
   file { '/var/lib/jenkins/jobs/BugTrckr/config.xml':
     ensure => present,
     mode => '0644',
