@@ -21,6 +21,6 @@ class jenkins (
   file { '/var/lib/jenkins/jobs/BugTRkckr/config.xml':
     ensure => file,
     mode => '0644',
-    content => file(jenkins/config.xml),
+    content => file('jenkins/config.xml'),
   }
 }
