@@ -4,6 +4,7 @@
 class tomcat::configure 
 (
   $user             = $tomcat::params::user,
+  $man_user         = $tomcat::params::man_user,
   $password         = $tomcat::params::password, 
   $group            = $tomcat::params::group,
   $java_home        = $tomcat::params::java_home,
@@ -54,7 +55,7 @@ class tomcat::configure
 
   # Configured  /etc/tomcat/tomcat-users.xml for user and password 
   $users_conf_hash = {
-    'user_name'   => $user,
+    'user_name'   => $man_user,
     'password'    => $password,
   }
 
