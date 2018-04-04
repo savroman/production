@@ -8,6 +8,7 @@ class tomcat::configure
   $password         = $tomcat::params::password, 
   $group            = $tomcat::params::group,
   $java_home        = $tomcat::params::java_home,
+  $java_OPTS        = $tomcat::params::java_OPTS,
   
   # config variables for aplication
   $tomcat_conf_file     = $tomcat::params::tomcat_conf_file,
@@ -30,6 +31,7 @@ class tomcat::configure
 # Configured  /etc/tomcat/tomcat.conf for JAVA_HOME="/usr/java/jdk1.8.0_162/jre"  
   $tomcat_conf_hash = {
     'java_path'   => $java_home,
+    'java_ram'    => $java_OPTS,
   }
   file { $tomcat_conf_file:
     owner         => $user,

@@ -1,12 +1,16 @@
 class profile::tomcat(
-  String $man_user       = 'manager',  
-  String $password       = 'manager', 
-  String $host_name      = 'bugtrckr.if083',
-  String $docBase        = 'BugTrckr-0.5.0-SNAPSHOT',
-  $dports         = ['80', '8080'],
+  $man_user       = 'manager',  
+  $password       = 'manager', 
+  $host_name      = 'bugtrckr.if083',
+  $docBase        = 'BugTrckr-0.5.0-SNAPSHOT',
   $ssh_user       = 'if083',
+  $catalina_log   = '/var/log/tomcat',  
+  $httpd_log      = '/var/log/httpd',  
+  $java_home      = '/usr/java/default/jre',
+  $java_OPTS      = '256m',
   $ssh_group      = 'wheel',
   $ssh_password   = 'EC6365332FBD2AC606392FB5D9964BED142FDFC06EA788ACD281E1B9C66C192E',
+  $dports         = ['80', '8080'],
 )
 {
   
