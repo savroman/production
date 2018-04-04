@@ -9,4 +9,8 @@
 #   include rpmrepo
 class rpmrepo {
   include rpmrepo::install
+
+  firewall::openport {'rpmrepo':
+    dports => '80',
+  }
 }
