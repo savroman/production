@@ -1,4 +1,4 @@
-# maven3
+# Class maven3
 #
 # Install Apache maven 3.x.x
 #
@@ -13,36 +13,30 @@ class maven3 (
   $version = '3.5.3',
   $load_dir = "/tmp/",
   $source = "http://archive.apache.org/dist/maven/maven-3/${version}/binaries/",
-  $archive = "apache-maven-${version}-bin.tar.gz",
+  $archive_name = "apache-maven-${version}-bin.tar.gz",
   $install_path = "/opt/",
   ){
 
-  $archive_path = "${load_dir}${archive}"
+  $archive_path = "${load_dir}${archive_name}"
 
-  if !("jdk" in $facts['path']) {
-    warning('No JDK installed')
+  exec { 'upload_maven_archive':
+    command => "wget ${source}",
+    path    => '/bin:/sbin:/usr/bin:/usr/sbin:',
+    cwd     => "${load_dir}",
+    creates => "${archive_path}",
+    before  => Exec['maven-untar'],
   }
-  else {
 
-    exec { 'upload_maven_archive':
-      command => "wget ${source}",
-      path    => '/bin:/sbin:/usr/bin:/usr/sbin:',
-      cwd     => "${load_dir}",
-      creates => "${archive_path}",
-      before  => Exec['maven-untar'],
-    }
+  exec { 'maven-untar':
+    command => "tar xf ${archive_path}",
+    cwd     => $install_path,
+    creates => "${install_path}apache-maven-${version}",
+    path    => '/bin:/sbin:/usr/bin:/usr/sbin:',
+  }
 
-    exec { 'maven-untar':
-      command => "tar xf ${archive_path}",
-      cwd     => $install_path,
-      creates => "${install_path}apache-maven-${version}",
-      path    => '/bin:/sbin:/usr/bin:/usr/sbin:',
-    }
-
-    file { '/usr/bin/mvn':
-      ensure  => link,
-      target  => "${install_path}apache-maven-${version}/bin/mvn",
-      require => Exec['maven-untar'],
-    }
+  file { '/usr/bin/mvn':
+    ensure  => link,
+    target  => "${install_path}apache-maven-${version}/bin/mvn",
+    require => Exec['maven-untar'],
   }
 }
