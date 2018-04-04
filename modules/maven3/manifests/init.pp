@@ -10,17 +10,16 @@
 #  }
 
 class maven3 (
-  $maven_version = '3.5.3',
+  $version = '3.5.3',
   $load_dir = "/tmp/",
-  $maven_url = "http://archive.apache.org/dist/maven/maven-3/",
+  $source = "http://archive.apache.org/dist/maven/maven-3/${version}/binaries/",
+  $archive = "apache-maven-${version}-bin.tar.gz",
   $install_path = "/opt/",
   ){
 
-  $archive = "apache-maven-${version}-bin.tar.gz"
-  $source = "${maven_url}${version}/binaries/apache-maven-${version}-bin.tar.gz"
   $archive_path = "${load_dir}${archive}"
 
-  if !("jdk1" in $facts['path']) {
+  if !("jdk" in $facts['path']) {
     warning('No JDK installed')
   }
   else {
@@ -42,7 +41,7 @@ class maven3 (
 
     file { '/usr/bin/mvn':
       ensure  => link,
-      target  => "/opt/apache-maven-${version}/bin/mvn",
+      target  => "${install_path}apache-maven-${version}/bin/mvn",
       require => Exec['maven-untar'],
     }
   }
