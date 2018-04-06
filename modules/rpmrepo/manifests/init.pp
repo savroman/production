@@ -8,12 +8,12 @@
 # @example
 #   include rpmrepo
 class rpmrepo (
-  $repo_url = '/var/www/html/repo',
-  $update   = '60', 
+  $repo_path = '/var/www/html/repo',
+  #$update   = '60',
   ) {
   include rpmrepo::install
 
-  file { $repo_url:
+  file { $repo_path:
     ensure => directory,
     mode   => '0755',
   }
