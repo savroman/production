@@ -11,7 +11,9 @@
 #   include rpmrepo::install
 class rpmrepo::install {
 
+
   include httpd
+
 
   # fpm instalation
   $fpm_needs= ['ruby-devel', 'gcc', 'make', 'rpm-build', 'rubygems',]
