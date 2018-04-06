@@ -40,18 +40,13 @@ class tomcat
   $users_conf_file    = "$confdir/tomcat-users.xml"
 
 # # Making sure the  aplication directory is present/created Create
-  if ($docBase == 'sample') 
-  {
-	$appdir             = "$catalina_home/webapps/$docBase"
-  }
-  else {
-  	$appdir           = "$catalina_home/webapps/$docBase"
-  
+  $appdir           = "$catalina_home/webapps/$docBase"
+  if ($docBase != 'sample') {
     file { $appdir:
- 		  ensure          => directory,
-    	owner           => 'tomcat',
-    	group           => 'tomcat',
-    	mode            => '0774',
+      ensure          => directory,
+      owner           => 'tomcat',
+      group           => 'tomcat',
+      mode            => '0774',
     } 
   }
 
