@@ -21,7 +21,9 @@ class httpd (
     warning('Apache will show test page')
   }
   else {
-    tidy { '/etc/httpd/conf.d/welcome.conf':}
+    tidy { '/etc/httpd/conf.d/welcome.conf':
+      notify => Service ['httpd'],
+    }
   }
 
 }
