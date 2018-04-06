@@ -10,17 +10,12 @@
 # @example
 #   include rpmrepo::install
 class rpmrepo::install {
+
+
   include httpd
 
-  file { '/var/www/html/repo':
-    ensure => directory,
-    mode   => '0644',
-  }
 
-  firewall::openport {'rpmrepo':
-    dports => ['80',],
-  }
-
+  # fpm instalation
   $fpm_needs= ['ruby-devel', 'gcc', 'make', 'rpm-build', 'rubygems',]
 
   package { $fpm_needs:
@@ -37,6 +32,10 @@ class rpmrepo::install {
   package { 'fpm':
     ensure   => installed,
     provider => 'gem',
-    #install_options => ['--no-ri', '--no-rdoc'],
+  }
+
+  #createrepo instalation
+  package { 'createrepo':
+    ensure   => installed,
   }
 }

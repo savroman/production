@@ -7,6 +7,18 @@
 #
 # @example
 #   include rpmrepo
-class rpmrepo {
+class rpmrepo (
+  $repo_path = '/var/www/html/repo',
+  #$update   = '60',
+  ) {
   include rpmrepo::install
+
+  file { $repo_path:
+    ensure => directory,
+    mode   => '0755',
+  }
+
+  firewall::openport {'rpmrepo':
+    dports => '80',
+  }
 }
