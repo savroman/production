@@ -11,7 +11,7 @@ class profile::rpmrepo {
   </VirtualHost>
       | CONF
 
-  httpd::addcfg { 'localrepo'
+  httpd::addcfg { 'localrepo':
     conf_name => "repo.conf",
     conf_text => $repo_conf,
   }
