@@ -1,6 +1,6 @@
 class profile::rpmrepo {
-  class rpmrepo {
-    repo_domain => "repo.if083",
+  class { 'rpmrepo':
+    repo_domain => 'repo.if083',
     repo_name   => 'Our local repopository',
   }
 
