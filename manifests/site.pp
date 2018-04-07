@@ -86,3 +86,7 @@ node 'rsyslog' {
   rsyslog::server { 'app' :
   }
 }
+
+node 'repo.if083' {
+  include role::repository
+}

@@ -16,19 +16,23 @@
 # 2. include this defined type
 #
 #    httpd::addcfg { 'some title'
-#      conf_name => "some.conf",
-#      conf_text => $variable,
+#      conf_name => "some.conf", # name of config file
+#      conf_text => $variable,   # config as a heredocs
 #    }
 
 define httpd::addcfg (
   $conf_name,
   $conf_text,
+  $user  = 'root',
+  $group = 'wheel',
   ) {
   require httpd
 
   file { "/etc/httpd/conf.d/${conf_name}":
     ensure  => file,
     mode    => '0744',
+    owner   => $user,
+    group   => $group,
     content => $conf_text,
   }
 }
