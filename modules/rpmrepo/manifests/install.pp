@@ -13,7 +13,7 @@ class rpmrepo::install {
 
   $tools = ['createrepo','yum-utils']
 
-  package { '$tools':
+  package { "${tools}":
     ensure   => installed,
   }
 }

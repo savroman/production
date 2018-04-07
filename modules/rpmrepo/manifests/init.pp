@@ -16,7 +16,7 @@ class rpmrepo (
   $port      = ['80'],
 
   ) {
-  $repo_path = "/var/www/${repo_domain}"
+  $repo_path = "/var/www/html/"
 
   include rpmrepo::install
   include httpd
@@ -33,11 +33,11 @@ class rpmrepo (
   }
 
   $repo_dirs.each |String $repo_dir| {
-    file { "${repo_path}/${repo_dir}":
-    ensure => directory,
-    mode   => '0755',
-    owner  => $user,
-    group  => $group,
+    file { "$repo_path/${repo_dir}":
+      ensure => directory,
+      mode   => '0755',
+      owner  => $user,
+      group  => $group,
     }
   }
 }

@@ -11,7 +11,7 @@ define rpmrepo::updaterepo (
   ) {
   cron { 'update_repo':
     command => "createrepo ${repo_dir}",
-    user    => $user,
+    owner   => $user,
     group   => $group,
     hour    => $update_hour,
     minute  => $update_min,
