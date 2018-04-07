@@ -18,4 +18,10 @@ class profile::rpmrepo {
     conf_text => $repo_conf,
   }
 
+  rpmrepo::updaterepo { 'soft':
+    repo_dir    => "/var/www/html/soft",
+    update_min  => '15',
+    update_hour => '21',
+    }
+  }
 }
