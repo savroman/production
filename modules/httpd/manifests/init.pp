@@ -13,8 +13,8 @@ class httpd (
   }
 
   service {'httpd':
-    ensure    => running,
-    enable    => true,
+    ensure => running,
+    enable => true,
   }
 
   if $welcome_page {
@@ -22,8 +22,7 @@ class httpd (
   }
   else {
     tidy { '/etc/httpd/conf.d/welcome.conf':
-      notify => Service ['httpd'],
+      notify => Service['httpd'],
     }
   }
-
 }
