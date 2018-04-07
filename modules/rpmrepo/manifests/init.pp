@@ -16,10 +16,10 @@ class rpmrepo (
   $port      = ['80'],
 
   ) {
+  $repo_path = "/var/www/${repo_domain}"
+
   include rpmrepo::install
   include httpd
-  
-  $repo_path = "/var/www/${repo_domain}",
 
   firewall::openport {'rpmrepo':
     dports => $port,
