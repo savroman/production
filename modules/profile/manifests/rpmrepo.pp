@@ -22,6 +22,5 @@ class profile::rpmrepo {
     repo_dir    => "/var/www/html/soft",
     update_min  => '15',
     update_hour => '21',
-    }
   }
 }
