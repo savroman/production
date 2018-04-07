@@ -33,7 +33,7 @@ class rpmrepo (
   }
 
   $repo_dirs.each |String $repo_dir| {
-    file { "$repo_path/${repo_dir}":
+    file { "$repo_path${repo_dir}":
       ensure => directory,
       mode   => '0755',
       owner  => $user,
