@@ -9,7 +9,7 @@ class profile::rpmrepo {
   <VirtualHost *:80>
     ServerName repo.if083
     ServerAlias www.repo.if083
-    DocumentRoot /var/www/repo.if083/
+    DocumentRoot /var/www/http/
   </VirtualHost>
       | CONF
 

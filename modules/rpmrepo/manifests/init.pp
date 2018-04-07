@@ -12,7 +12,7 @@ class rpmrepo (
   $repo_name,
   $repo_dirs = undef,
   $user      = 'root',
-  $group     = 'wheel',
+  $group     = 'root',
   $port      = ['80'],
 
   ) {
@@ -33,7 +33,7 @@ class rpmrepo (
   }
 
   $repo_dirs.each |String $repo_dir| {
-    file { "${repo_path}${repo_dir}":
+    file { "${repo_path}/${repo_dir}":
     ensure => directory,
     mode   => '0755',
     owner  => $user,
