@@ -1,6 +1,6 @@
 # == Define: rpmrepo::updaterepo
 #
-# Updates repo 
+# Updates repo
 define rpmrepo::updaterepo (
   $repo_dir,
   $user        = $rpmrepo::user,
@@ -15,6 +15,6 @@ define rpmrepo::updaterepo (
     group   => $group,
     hour    => $update_hour,
     minute  => $update_min,
-    require => Package ['createrepo'],
+    require => Package['createrepo'],
   }
 }

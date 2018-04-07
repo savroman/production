@@ -28,15 +28,16 @@ class rpmrepo (
   file { $repo_path:
     ensure => directory,
     mode   => '0755',
-    user    => $user,
-    group   => $group,
+    owner  => $user,
+    group  => $group,
   }
 
   $repo_dirs.each |String $repo_dir| {
-    file { $repo_dir:
+    file { "${repo_path}${repo_dir}":
     ensure => directory,
     mode   => '0755',
-    user    => $user,
-    group   => $group,
+    owner  => $user,
+    group  => $group,
+    }
   }
 }
