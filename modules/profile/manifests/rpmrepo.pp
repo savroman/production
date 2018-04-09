@@ -23,4 +23,9 @@ class profile::rpmrepo {
     update_min  => '15',
     update_hour => '21',
   }
+
+  rpmrepo::updaterepo { 'apps':
+    repo_dir    => "/var/www/html/apps",
+    update_min  => '15',
+  }
 }

@@ -13,13 +13,11 @@ class rpmrepo (
   $repo_dirs = undef,
   $user      = 'root',
   $group     = 'root',
-  $port      = ['80'],
-
   ) {
   $repo_path = "/var/www/html"
 
   include rpmrepo::install
-  
+
   file { $repo_path:
     ensure => directory,
     mode   => '0755',
