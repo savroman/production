@@ -16,15 +16,10 @@ class rpmrepo (
   $port      = ['80'],
 
   ) {
-  $repo_path = "/var/www/html/"
+  $repo_path = "/var/www/html"
 
   include rpmrepo::install
-  include httpd
-
-  firewall::openport {'rpmrepo':
-    dports => $port,
-  }
-
+  
   file { $repo_path:
     ensure => directory,
     mode   => '0755',
@@ -33,7 +28,7 @@ class rpmrepo (
   }
 
   $repo_dirs.each |String $repo_dir| {
-    file { "$repo_path${repo_dir}":
+    file { "${repo_path}/${repo_dir}":
       ensure => directory,
       mode   => '0755',
       owner  => $user,
