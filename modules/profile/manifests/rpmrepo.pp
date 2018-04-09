@@ -10,12 +10,14 @@ class profile::rpmrepo {
   httpd::vhost { 'repo':
     port          => '80',
     document_root => '/var/www/html',
+    user          => 'root',
+    group         => 'root',
   }
 
   firewall::openport {'rpmrepo':
     dports => ['80'],
   }
-  
+
   rpmrepo::updaterepo { 'soft':
     repo_dir    => "/var/www/html/soft",
     update_min  => '15',
