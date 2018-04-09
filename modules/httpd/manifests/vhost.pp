@@ -2,7 +2,7 @@
 #
 #
 #
-define apache::vhost (
+define httpd::vhost (
 $document_root,
 $port,
 $server_name   = $facts[fqdn],
