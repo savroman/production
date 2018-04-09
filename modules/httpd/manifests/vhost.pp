@@ -27,6 +27,6 @@ $conf_hash = { document_root => $document_root,
     mode    => '0744',
     owner   => $user,
     group   => $group,
-    content => epp('apache/vhost.conf.epp', $conf_text),
+    content => epp('apache/vhost.conf.epp', $conf_hash),
   }
 }
