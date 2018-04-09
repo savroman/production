@@ -3,7 +3,7 @@
       $server_alias,
       $document_root,
       $error_log,
-      $reguests_log,
+      $requests_log,
 | -%>
 
 <VirtualHost *: <%= $port %>
@@ -11,5 +11,5 @@ ServerName <%= $server_name %>
 <% if $server_alias { %> ServerAlias <%= $server_alias %><% } %>
 DocumentRoot <%= $document_root %>
 <% if $error_log { %> ErrorLog <%= $error_log %><% } %>
-<% if $reguests_log { %> CustomLog <%= $reguests_log %><% } %>
+<% if $requests_log { %> CustomLog <%= $requests_log %><% } %>
 </VirtualHost>
