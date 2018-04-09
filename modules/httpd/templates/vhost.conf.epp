@@ -8,8 +8,8 @@
 
 <VirtualHost *: <%= $port %>
 ServerName <%= $server_name %>
-<% if $server_alias { %> ServerAlias <%= $server_alias %><% }
+<% if $server_alias { %> ServerAlias <%= $server_alias %><% } %>
 DocumentRoot <%= $document_root %>
-<%if $error_log { %> ErrorLog <%= $error_log %><% }
-<%if $reguests_log { %> CustomLog <%= $reguests_log, %><% }
+<% if $error_log { %> ErrorLog <%= $error_log %><% } %>
+<% if $reguests_log { %> CustomLog <%= $reguests_log, %><% } %>
 </VirtualHost>
