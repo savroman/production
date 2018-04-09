@@ -1,23 +1,21 @@
 class profile::rpmrepo {
   class { 'rpmrepo':
-    repo_domain => 'repo.if083',
+    repo_domain => $facts[hostname],
     repo_name   => 'Our local repopository',
     repo_dirs   => ['soft','apps'],
   }
 
-  $repo_conf = @(CONF)
-  <VirtualHost *:80>
-    ServerName repo.if083
-    ServerAlias www.repo.if083
-    DocumentRoot /var/www/http/
-  </VirtualHost>
-      | CONF
+  include httpd
 
-  httpd::addcfg { 'localrepo':
-    conf_name => "repo.conf",
-    conf_text => $repo_conf,
+  httpd::vhost { 'repo':
+    port          => '80',
+    document_root => '/var/www/html',
   }
 
+  firewall::openport {'rpmrepo':
+    dports => ['80'],
+  }
+  
   rpmrepo::updaterepo { 'soft':
     repo_dir    => "/var/www/html/soft",
     update_min  => '15',
