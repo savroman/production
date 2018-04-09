@@ -6,7 +6,7 @@
       $requests_log,
 | -%>
 
-<VirtualHost *: <%= $port %>
+<VirtualHost *:<%= $port -%>>
 ServerName <%= $server_name %>
 <% if $server_alias { -%> ServerAlias <%= $server_alias %><% } %>
 DocumentRoot <%= $document_root %>
