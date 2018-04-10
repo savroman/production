@@ -9,7 +9,7 @@ define rpmrepo::updaterepo (
   $update_hour = 'absent',
 
   ) {
-  cron { 'update_repo':
+  cron { 'update_repo{$title}':
     command => "createrepo ${repo_dir}",
     user    => $user,
     hour    => $update_hour,
