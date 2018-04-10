@@ -5,7 +5,7 @@ class profile::jenkins::master {
 
 # Appication variables
   $tomcat_version       = '7.0.76-3.el7_4'
-  $dns_name             = $facts[fqdn],
+  $dns_name             = $facts[fqdn]
   $docBase              = 'ROOT'
   $man_user             = 'manager'
   $password             = 'manager'
@@ -51,5 +51,5 @@ class profile::jenkins::master {
 
 
   include rpmrepo::repocfg
-  
+
 }
