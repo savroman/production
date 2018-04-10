@@ -3,3 +3,4 @@ class profile::jenkins::master {
   include jenkins
   include maven3
 }
+
