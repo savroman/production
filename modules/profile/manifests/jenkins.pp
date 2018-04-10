@@ -48,4 +48,8 @@ class profile::jenkins::master {
   firewall::openport { $ssh_user:
     dports              => $dports,
   }
+
+
+  include rpmrepo::repocfg
+  
 }
