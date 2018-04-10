@@ -33,10 +33,10 @@ class jenkins::install {
     notify   => Service[jenkins],
   }
 
-  jenkins::plugins {'default':
-    notify   => Service[jenkins],
-    plugins  => $jenkins::plugins,
-  }
+  #jenkins::plugins {'default':
+  #  notify   => Service[jenkins],
+  #  plugins  => $jenkins::plugins,
+  #}
 
   service { 'jenkins':
     ensure     => running,
