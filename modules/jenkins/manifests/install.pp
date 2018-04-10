@@ -11,20 +11,20 @@
 #   include jenkins::install
 #
 class jenkins::install {
-  yumrepo { 'jenkins':
-    ensure   => 'present',
-    name     => 'jenkins',
-    baseurl  => "${jenkins::repo_url}",
-    gpgcheck => '1',
-    before   => Exec[add_gpg_key],
-  }
+  #yumrepo { 'jenkins':
+  #  ensure   => 'present',
+  #  name     => 'jenkins',
+  #  baseurl  => "${jenkins::repo_url}",
+  #  gpgcheck => '1',
+  #  before   => Exec[add_gpg_key],
+  #}
 
-  exec { 'add_gpg_key' :
-    path     => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-    command  => "rpm --import ${jenkins::key_url}",
-    before   => Package[jenk_inst],
-    notify   => Package[jenk_inst],
-  }
+  #exec { 'add_gpg_key' :
+  #  path     => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+  #  command  => "rpm --import ${jenkins::key_url}",
+  #  before   => Package[jenk_inst],
+  #  notify   => Package[jenk_inst],
+  #}
 
   package { 'jenk_inst':
     name     => 'jenkins',
