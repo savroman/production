@@ -1,8 +1,15 @@
 class profile::jenkins::master {
+  rpmrepo::repocfg {'soft':
+    reponame => "Our Soft",
+    url      => "http://repo.if083",
+    subpath  => "soft"
+  }
+
+
   include java8
   include httpd
   include firewall
-  include jenkins
+  include jenkins::install
 # Appication variables
   $tomcat_version       = '7.0.76-3.el7_4'
   $dns_name             = $facts[fqdn]
@@ -50,10 +57,6 @@ class profile::jenkins::master {
   }
 
 
-  rpmrepo::repocfg {'soft':
-    reponame => "Our Soft",
-    url      => "http://repo.if083",
-    subpath  => "soft"
-  }
+
 
 }
