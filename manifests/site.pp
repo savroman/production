@@ -21,7 +21,7 @@ node default {
 # here is the line 23
 
 
-node 'jenkins.local' {
+node 'jenkins.if083' {
   include role::jenkins::master
 }
 
@@ -55,4 +55,8 @@ node /^web/ {
 
 node 'rsyslog' {
   include role::rsyslog
+}
+
+node 'repo.if083' {
+  include role::repository
 }
