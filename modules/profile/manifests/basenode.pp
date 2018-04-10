@@ -4,11 +4,7 @@ class profile::basenode {
   include base
 
 # Configure ssh_user
-  base::ssh_user { 'if083':
-    ssh_user     => 'if083',
-    ssh_password => 'twm',
-    ssh_group    => 'wheel',
-  }
+  
 # Configure rsyslog
   rsyslog::config {'secure':
     log_name     => '/var/log/secure',
