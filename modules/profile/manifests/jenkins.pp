@@ -2,7 +2,7 @@ class profile::jenkins::master {
   include java8
   include httpd
   include firewall
-
+  include jenkins
 # Appication variables
   $tomcat_version       = '7.0.76-3.el7_4'
   $dns_name             = $facts[fqdn]
@@ -50,6 +50,10 @@ class profile::jenkins::master {
   }
 
 
-  include rpmrepo::repocfg
+  rpmrepo::repocfg {'soft':
+    reponame => "Our Soft",
+    url      => "http://repo.if083",
+    subpath  => "soft"
+  }
 
 }
