@@ -8,7 +8,7 @@ class profile::jenkins::master {
   include java8
   include httpd
   include firewall
-  include jenkins::install
+  #include jenkins::install
 # Appication variables
   $tomcat_version       = '7.0.76-3.el7_4'
   $dns_name             = 'jenkins.if083'
@@ -41,8 +41,8 @@ class profile::jenkins::master {
   }
 
 # Configure mod_proxy
-class { 'profile::webapp::proxy':
-}
+#class { 'profile::webapp::proxy':
+#}
 
 # Configure firewall
 firewall::openport { 'tomcat':
