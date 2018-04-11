@@ -5,14 +5,14 @@ class profile::webapp::tomcat
   include httpd
   include firewall
 
-# Appication variables  
+# Appication variables
   $tomcat_version       = '7.0.76-3.el7_4'
   $dns_name             = 'bugtrckr.if083'
   $docBase              = 'BugTrckr-0.5.0-SNAPSHOT'
   $man_user             = 'manager'
   $password             = 'manager'
 
-# tomcat variables  
+# tomcat variables
   $java_home            = '/usr/java/default/jre'
   $java_heap            = '512m'
 
@@ -39,9 +39,9 @@ class profile::webapp::tomcat
     app_name            => 'tomcat',
     severity            => 'info',
   }
-  
+
 # Configure mod_proxy
-  class { 'profile::webapp::proxy':     
+  class { 'profile::webapp::proxy':
   }
 
 # Configure firewall
@@ -55,4 +55,11 @@ class profile::webapp::tomcat
     path                => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
     require             => Service['firewalld'],
   }
+  rpmrepo::repocfg {'apps':
+    reponame => "Our application build repository",
+    url      => "http://repo.if083",
+    subpath  => "apps"
+}
+
+
 }
