@@ -10,7 +10,7 @@ define rpmrepo::updaterepo (
 
   ) {
   cron { "update_repo${title}":
-    command => "createrepo ${repo_dir}",
+    command => "/usr/bin/createrepo --update ${repo_dir}",
     user    => $user,
     hour    => $update_hour,
     minute  => $update_min,
