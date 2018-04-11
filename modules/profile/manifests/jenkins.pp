@@ -40,19 +40,19 @@ class profile::jenkins::master {
     java_heap      => $java_heap,
   }
 
-# Configure mod_proxy
-#class { 'profile::webapp::proxy':
-#}
+  # Configure mod_proxy
+  #class { 'profile::webapp::proxy':
+  #}
 
-# Configure firewall
-firewall::openport { 'tomcat':
-  dports              => $dports,
-}
+  # Configure firewall
+  firewall::openport { 'tomcat':
+    dports => $dports,
+  }
 
-# Configure selinux
-exec { 'setenforce':
-  command             => 'setenforce 0',
-  path                => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-  require             => Service['firewalld'],
-}
+  # Configure selinux
+  exec { 'setenforce':
+    command             => 'setenforce 0',
+    path                => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+    require             => Service['firewalld'],
+  }
 }
