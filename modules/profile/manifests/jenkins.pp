@@ -11,7 +11,7 @@ class profile::jenkins::master {
   include jenkins::install
 # Appication variables
   $tomcat_version       = '7.0.76-3.el7_4'
-  $dns_name             = $facts[fqdn]
+  $dns_name             = 'jenkins.if083'
   $docBase              = 'jenkins'
   $man_user             = 'manager'
   $password             = 'manager'
