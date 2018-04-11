@@ -4,17 +4,17 @@ class profile::webapp::tomcat
   include java8
   include httpd
   include firewall
-
+  
 # Appication variables  
   $tomcat_version       = '7.0.76-3.el7_4'
-  $dns_name             = 'bugtrckr.if083'
+  $dns_name             = "$fqdn"
   $docBase              = 'BugTrckr-0.5.0-SNAPSHOT'
   $man_user             = 'manager'
   $password             = 'manager'
 
 # tomcat variables  
   $java_home            = '/usr/java/default/jre'
-  $java_heap            = '512m'
+  $java_heap            = '256m'
 
 # firewall variables
   $dports               = ['80', '8080']
@@ -31,9 +31,9 @@ class profile::webapp::tomcat
   }
 
 # Configure rsyslog
-  class {'rsyslog::client':
+  class { 'rsyslog::client':
   }
-  rsyslog::config {'tomcat':
+  rsyslog::config { 'tomcat':
     log_name            => '/var/log/tomcat/*',
     log_tag             => 'tomcat_',
     app_name            => 'tomcat',
