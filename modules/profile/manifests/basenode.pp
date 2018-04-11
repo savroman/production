@@ -1,7 +1,7 @@
 class profile::basenode {
 
   include motd
-  include rpmrepo::repocfg
+  
 # schedule parameters for update
   class { 'base':
     period       => 'daily',
