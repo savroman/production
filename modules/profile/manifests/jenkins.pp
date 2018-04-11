@@ -5,7 +5,6 @@ class profile::jenkins::master {
     subpath  => "soft"
   }
 
-
   include java8
   include httpd
   include firewall
@@ -13,7 +12,7 @@ class profile::jenkins::master {
 # Appication variables
   $tomcat_version       = '7.0.76-3.el7_4'
   $dns_name             = $facts[fqdn]
-  $docBase              = 'ROOT'
+  $docBase              = 'jenkins'
   $man_user             = 'manager'
   $password             = 'manager'
 
@@ -42,21 +41,17 @@ class profile::jenkins::master {
   }
 
 # Configure mod_proxy
-  class { 'profile::tomcat::proxy':
-     dns_name         => $dns_name,
-  }
+class { 'profile::webapp::proxy':
+}
 
-  base::ssh_user { $ssh_user:
-    ssh_user     => $ssh_user,
-    ssh_password => $ssh_password,
-    ssh_group    => $ssh_group,
-  }
+# Configure firewall
+firewall::openport { 'tomcat':
+  dports              => $dports,
+}
 
-  firewall::openport { $ssh_user:
-    dports              => $dports,
-  }
-
-
-
-
+# Configure selinux
+exec { 'setenforce':
+  command             => 'setenforce 0',
+  path                => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+  require             => Service['firewalld'],
 }
