@@ -3,6 +3,11 @@ class profile::basenode {
   include motd
   include base
 
+  rpmrepo::repocfg {'soft':
+    reponame => "Our Soft",
+    url      => "http://repo.if083",
+    subpath  => "soft"
+  }
 # Configure ssh_user
   base::ssh_user { 'if083':
     ssh_user     => 'if083',
@@ -23,4 +28,6 @@ class profile::basenode {
     app_name     => 'messages',
     severity     => 'info',
   }
+
+
 }
