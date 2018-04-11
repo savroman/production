@@ -55,3 +55,4 @@ exec { 'setenforce':
   path                => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
   require             => Service['firewalld'],
 }
+}
