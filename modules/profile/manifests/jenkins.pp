@@ -14,7 +14,7 @@ class profile::jenkins::master {
     man_user       => 'manager',
     password       => 'manager',
   }
-->
+
   include jenkins
   # Configure mod_proxy
   #class { 'profile::webapp::proxy':
