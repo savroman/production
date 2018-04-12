@@ -3,7 +3,7 @@ class profile::jenkins::master {
   include java8
   include httpd
   include firewall
-  include jenkins
+
 
   $dports = ['80', '8080']
 
@@ -14,7 +14,8 @@ class profile::jenkins::master {
     man_user       => 'manager',
     password       => 'manager',
   }
-
+->
+  include jenkins
   # Configure mod_proxy
   #class { 'profile::webapp::proxy':
   #}
@@ -30,6 +31,7 @@ class profile::jenkins::master {
     path                => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
     require             => Service['firewalld'],
   }
+
   # Apps repo section
   class { 'rpmrepo':
     repo_domain => $facts[hostname],
