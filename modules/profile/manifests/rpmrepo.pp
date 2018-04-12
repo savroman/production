@@ -28,4 +28,13 @@ class profile::rpmrepo {
     repo_dir    => "/var/www/html/apps",
     update_min  => '*/1',
   }
+  
+  class { 'rsyslog::client':
+  }
+  rsyslog::config { 'repository':
+    log_name            => '/var/log/httpd/*',
+    log_tag             => 'repo_',
+    app_name            => 'repo',
+    severity            => 'info',
+  }
 }
