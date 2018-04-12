@@ -31,6 +31,7 @@ class rpmrepo (
       mode    => '0755',
       owner   => $user,
       group   => $group,
+      notify  => Service['httpd'],
     }
 
     exec { "repocreate-${repo_dir}":
