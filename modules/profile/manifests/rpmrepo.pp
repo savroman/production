@@ -1,11 +1,13 @@
 class profile::rpmrepo {
+  include httpd
+  
   class { 'rpmrepo':
     repo_domain => $facts[hostname],
     repo_name   => 'Our local repopository',
     repo_dirs   => ['soft','apps'],
   }
 
-  include httpd
+  
 
   httpd::vhost { 'repo':
     port          => '80',
