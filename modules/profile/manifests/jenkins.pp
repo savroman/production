@@ -1,51 +1,53 @@
 class profile::jenkins::master {
+
   include java8
   include httpd
   include firewall
 
-# Appication variables
-  $tomcat_version       = '7.0.76-3.el7_4'
-  $dns_name             = $facts[fqdn],
-  $docBase              = 'ROOT'
-  $man_user             = 'manager'
-  $password             = 'manager'
 
-# Tomcat variables
-  $java_home            = '/usr/java/default/jre'
-  $java_heap            = '512m'
-
-# rsyslog variables
-  $catalina_log         = '/usr/share/tomcat/logs'
-  $httpd_log            = '/var/log/httpd'
-
-# Base variables
-  $ssh_user             = 'if083'
-  $ssh_group            = 'wheel'
-  $ssh_password         = 'tmw'
-  $dports               = ['80', '8080']
+  $dports = ['80', '8080']
 
   class { 'tomcat':
-    tomcat_version => $tomcat_version,
-    dns_name       => $dns_name,
-    docBase        => $docBase,
-    man_user       => $man_user,
-    password       => $password,
-    java_home      => $java_home,
-    java_heap      => $java_heap,
+    tomcat_version => '7.0.76-3.el7_4',
+    dns_name       => 'jenkins.if083',
+    docBase        => 'jenkins',
+    man_user       => 'manager',
+    password       => 'manager',
   }
 
-# Configure mod_proxy
-  class { 'profile::tomcat::proxy':
-     dns_name         => $dns_name,
+  include jenkins
+  # Configure mod_proxy
+  #class { 'profile::webapp::proxy':
+  #}
+
+  # Configure firewall
+  firewall::openport { 'jenkins':
+    dports => $dports,
   }
 
-  base::ssh_user { $ssh_user:
-    ssh_user     => $ssh_user,
-    ssh_password => $ssh_password,
-    ssh_group    => $ssh_group,
+  # Configure selinux
+  exec { 'setenforce':
+    command             => 'setenforce 0',
+    path                => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+    require             => Service['firewalld'],
   }
 
-  firewall::openport { $ssh_user:
-    dports              => $dports,
+  # Apps repo section
+  class { 'rpmrepo':
+    repo_domain => $facts[hostname],
+    repo_name   => 'Our application buils',
+    repo_dirs   => ['apps','apps/latest'],
+  }
+
+  httpd::vhost { 'apprepo':
+    port          => '80',
+    document_root => '/var/www/html',
+    user          => 'root',
+    group         => 'root',
+  }
+
+  rpmrepo::updaterepo { 'apps':
+    repo_dir    => "/var/www/html/apps",
+    update_min  => '*/1',
   }
 }
