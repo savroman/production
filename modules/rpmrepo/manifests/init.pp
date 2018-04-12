@@ -40,5 +40,6 @@ class rpmrepo (
       creates => "${repo_path}/${repo_dir}/repodata",
       require => Package['createrepo'],
     }
+    ~> Service ['httpd']
   } 
 }
