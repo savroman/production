@@ -31,5 +31,5 @@ class profile::basenode {
   #  log_tag      => 'sys_',
   #  app_name     => 'messages',
   #  severity     => 'info',
-  }
+  #}
 }
