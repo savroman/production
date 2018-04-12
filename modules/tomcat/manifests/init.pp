@@ -14,7 +14,10 @@ class tomcat
   $man_user           = 'admin',
   $password           = 'admin',
 
-# Tomcat variables
+
+# Tomcat variables  
+
+
   $java_home          = '/usr/java/default/jre',
   $java_heap          = '512m',
 ){
@@ -31,7 +34,9 @@ class tomcat
   $users_conf_file    = "$confdir/tomcat-users.xml"
 
 # # Making sure the  aplication directory is present/created Create
+
   $appdir             = "$catalina_home/webapps/$docBase"
+
   if ($docBase != 'sample') {
     file { $appdir:
       ensure          => directory,
@@ -82,11 +87,12 @@ class tomcat
     notify            => Service['tomcat'],
   }
 
-# Start tomcat
+
+  # Start tomcat 
+
   service { 'tomcat':
      enable           => true,
      ensure           => running,
      require          => File["$users_conf_file"],
   }
-
 }
