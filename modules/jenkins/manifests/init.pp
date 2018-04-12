@@ -7,11 +7,7 @@
 # @example
 #   include jenkins
 class jenkins (
-  $repo_url = 'https://pkg.jenkins.io/redhat-stable',
-  $key_url  = 'https://pkg.jenkins.io/redhat-stable/jenkins.io.key',
-  $dports   = ['8080', '9000'],
   $plugins  = ['sonar', 'maven-plugin', 'jquery']
   ){
-
   include jenkins::install
 }

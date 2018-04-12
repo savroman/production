@@ -1,7 +1,7 @@
 class profile::basenode {
 
   include motd
-  
+
 # schedule parameters for update
   class { 'base':
     period       => 'daily',
