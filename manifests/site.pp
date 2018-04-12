@@ -29,11 +29,8 @@ node 'sonar' {
   include role::sonarqube
 }
 
-node 'zabbix' {
-  include zabbixsrv
-}
-node 'db'{
-  include zabbixagent
+node 'zabbix.if083' {
+  include role::zabbix
 }
 
 node 'balancer' {
