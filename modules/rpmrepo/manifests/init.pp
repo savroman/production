@@ -40,6 +40,5 @@ class rpmrepo (
       require => Package['createrepo'],
       notify  => Service['httpd'],
     }
-  }
-  service 
+  } 
 }
