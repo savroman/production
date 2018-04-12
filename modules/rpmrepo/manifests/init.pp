@@ -31,13 +31,15 @@ class rpmrepo (
       mode    => '0755',
       owner   => $user,
       group   => $group,
+      notify  => Service['httpd'],
     }
 
     exec { "repocreate-${repo_dir}":
+      subscribe  => Service['httpd'],
       command => "/usr/bin/createrepo --database ${repo_path}/${repo_dir}",
-      path => '/usr/bin',
+      path    => '/usr/bin',
       creates => "${repo_path}/${repo_dir}/repodata",
       require => Package['createrepo'],
     }
-  }
+  } 
 }

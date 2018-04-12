@@ -1,11 +1,13 @@
 class profile::rpmrepo {
+  include httpd
+  
   class { 'rpmrepo':
     repo_domain => $facts[hostname],
     repo_name   => 'Our local repopository',
     repo_dirs   => ['soft','apps'],
   }
 
-  include httpd
+  
 
   httpd::vhost { 'repo':
     port          => '80',
@@ -27,5 +29,14 @@ class profile::rpmrepo {
   rpmrepo::updaterepo { 'apps':
     repo_dir    => "/var/www/html/apps",
     update_min  => '*/1',
+  }
+  
+  class { 'rsyslog::client':
+  }
+  rsyslog::config { 'repository':
+    log_name            => '/var/log/httpd/*',
+    log_tag             => 'repo_',
+    app_name            => 'repo',
+    severity            => 'info',
   }
 }
