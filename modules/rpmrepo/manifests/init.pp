@@ -38,6 +38,7 @@ class rpmrepo (
       path    => '/usr/bin',
       creates => "${repo_path}/${repo_dir}/repodata",
       require => Package['createrepo'],
+      notify  => Service['httpd'],
     }
-  }
+  } 
 }
