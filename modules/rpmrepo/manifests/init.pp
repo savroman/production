@@ -34,11 +34,11 @@ class rpmrepo (
     }
 
     exec { "repocreate-${repo_dir}":
+      notify  => Service['httpd'],
       command => "/usr/bin/createrepo --database ${repo_path}/${repo_dir}",
       path    => '/usr/bin',
       creates => "${repo_path}/${repo_dir}/repodata",
       require => Package['createrepo'],
-      notify  => Service['httpd'],
     }
   } 
 }
