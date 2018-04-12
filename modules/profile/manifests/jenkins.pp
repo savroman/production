@@ -9,7 +9,7 @@ class profile::jenkins::master {
 
   class { 'tomcat':
     tomcat_version => '7.0.76-3.el7_4',
-    dns_name       => 'jenkins.if083'e,
+    dns_name       => 'jenkins.if083',
     docBase        => 'jenkins',
     man_user       => 'manager',
     password       => 'manager',
