@@ -31,13 +31,13 @@ class profile::jenkins::master {
     }
 
   # Configure mod_proxy
-    class { 'profile::webapp::proxy':
+    class { 'profile::jenkins::proxy':
     }
 
   # Configure rsyslog
     class { 'rsyslog::client':
     }
-    
+
     rsyslog::config { 'tomcat':
       log_name            => '/var/log/tomcat/*',
       log_tag             => 'tomcat_',
