@@ -10,7 +10,7 @@
 #    hash          => '2f38c3b165be4555a1fa6e98c45e0808'
 #    java_se       => 'jre',
 # }
-http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.rpm
+#http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.rpm
 class java8 (
   $java_se       = 'jdk',
   $oracle_url    = 'http://download.oracle.com/otn-pub/java/jdk/',
