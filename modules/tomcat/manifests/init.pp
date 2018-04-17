@@ -14,10 +14,17 @@ class tomcat
   $man_user           = 'admin',
   $password           = 'admin',
 
+<<<<<<< HEAD
 
 # Tomcat variables
 
 
+=======
+
+# Tomcat variables  
+
+
+>>>>>>> master
   $java_home          = '/usr/java/default/jre',
   $java_heap          = '512m',
 ){
@@ -40,8 +47,8 @@ class tomcat
   if ($docBase != 'sample') {
     file { $appdir:
       ensure          => directory,
-      owner           => 'tomcat',
-      group           => 'tomcat',
+      owner           => 'root',
+      group           => 'root',
       mode            => '0774',
     }
   }
@@ -52,8 +59,8 @@ class tomcat
     'java_heap'       => $java_heap,
   }
   file { $tomcat_conf_file:
-    owner             => 'tomcat',
-    group             => 'tomcat',
+    owner             => 'root',
+    group             => 'root',
     mode              => '0664',
     content           => epp('tomcat/tomcat.conf.epp', $tomcat_conf_hash),
     notify            => Service['tomcat'],
@@ -66,8 +73,8 @@ class tomcat
   }
 
   file { $server_conf_file:
-    owner             => 'tomcat',
-    group             => 'tomcat',
+    owner             => 'root',
+    group             => 'root',
     mode              => '0664',
     content           => epp('tomcat/server.conf.epp', $server_conf_hash),
     notify            => Service['tomcat'],
@@ -80,15 +87,19 @@ class tomcat
   }
 
   file { $users_conf_file:
-    owner             => 'tomcat',
-    group             => 'tomcat',
+    owner             => 'root',
+    group             => 'root',
     mode              => '0664',
     content           => epp('tomcat/users.conf.epp', $users_conf_hash),
     notify            => Service['tomcat'],
   }
 
 
+<<<<<<< HEAD
   # Start tomcat
+=======
+  # Start tomcat 
+>>>>>>> master
 
   service { 'tomcat':
      enable           => true,
