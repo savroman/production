@@ -20,7 +20,7 @@ class java8 (
   $hash          = '512cd62ec5174c3487ac17c61aaa89e8',
   $load_dir      = "/tmp/",
   $arch_bit      = $java8::params::arch_bit,
-  $local_repo = 'false',
+  $local_repo    = 'false',
   $local_source  = undef,
 ) inherits java8::params {
 
@@ -28,7 +28,7 @@ class java8 (
   if $java_se !~ /(jre|jdk)/ {
     fail('Java SE must be either jre or jdk.')
   }
-  if $local_repo == true {
+  if $local_repo == 'true' {
     $pkg       = "${java_se}-8u${version_major}-${arch_bit}.rpm"
     $source    = "${local_source}/${pkg}"
     $pkg_path  = "${load_dir}${pkg}"
