@@ -35,6 +35,7 @@ class profile::jenkins::master {
 
   # Configure mod_proxy
     class { 'profile::webapp::proxy':
+      dns_name => $dns_name,
     }
 
   # Configure rsyslog
