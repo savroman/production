@@ -14,9 +14,7 @@ class tomcat
   $man_user           = 'admin',
   $password           = 'admin',
 
-
 # Tomcat variables  
-
 
   $java_home          = '/usr/java/default/jre',
   $java_heap          = '512m',
@@ -88,7 +86,9 @@ class tomcat
   }
 
 
+
   # Start tomcat 
+
 
   service { 'tomcat':
      enable           => true,

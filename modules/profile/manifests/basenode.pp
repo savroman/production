@@ -19,17 +19,17 @@ class profile::basenode {
     key          => file('profile/service.pub'),
   }
 # Configure rsyslog
-  rsyslog::config { 'secure':
-    log_name     => '/var/log/secure',
-    log_tag      => 'sys_',
-    app_name     => 'secure',
-    severity     => 'info',
-  }
+  #rsyslog::config { 'secure':
+  #  log_name     => '/var/log/secure',
+  #  log_tag      => 'sys_',
+  #  app_name     => 'secure',
+  #  severity     => 'info',
+  #}
 
-  rsyslog::config { 'messages':
-    log_name     => '/var/log/messages',
-    log_tag      => 'sys_',
-    app_name     => 'messages',
-    severity     => 'info',
-  }
+  #rsyslog::config { 'messages':
+  #  log_name     => '/var/log/messages',
+  #  log_tag      => 'sys_',
+  #  app_name     => 'messages',
+  #  severity     => 'info',
+  #}
 }
