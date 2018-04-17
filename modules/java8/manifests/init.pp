@@ -10,13 +10,14 @@
 #    hash          => '2f38c3b165be4555a1fa6e98c45e0808'
 #    java_se       => 'jre',
 # }
+http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.rpm
 class java8 (
   $java_se       = 'jdk',
   $oracle_url    = 'http://download.oracle.com/otn-pub/java/jdk/',
   $cookie        = '--no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie"',
-  $version_major = '162',
-  $version_minor = 'b12',
-  $hash          = '0da788060d494f5095bf8624735fa2f1',
+  $version_major = '172',
+  $version_minor = 'b11',
+  $hash          = '512cd62ec5174c3487ac17c61aaa89e8',
   $load_dir      = "/tmp/",
   $arch_bit      = $java8::params::arch_bit,
 ) inherits java8::params {

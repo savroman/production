@@ -10,6 +10,7 @@
 class rpmrepo (
   $repo_domain,
   $repo_name,
+  $repo_source,
   $repo_dirs = undef,
   $user      = 'root',
   $group     = 'root',
@@ -19,10 +20,12 @@ class rpmrepo (
   include rpmrepo::install
 
   file { $repo_path:
-    ensure => directory,
-    mode   => '0755',
-    owner  => $user,
-    group  => $group,
+    ensure  => directory,
+    mode    => '0755',
+    owner   => $user,
+    group   => $group,
+    recurse => true,
+    source  => "file:///${repo_source}",
   }
 
   $repo_dirs.each |String $repo_dir| {
@@ -41,5 +44,5 @@ class rpmrepo (
       creates => "${repo_path}/${repo_dir}/repodata",
       require => Package['createrepo'],
     }
-  } 
+  }
 }
