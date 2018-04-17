@@ -13,7 +13,7 @@ class profile::jenkins::master {
 
   # Appication variables
     $tomcat_version       = '7.0.76-3.el7_4'
-    $dns_name             = "jenkins.if083"
+    $dns_name             = "$fqdn"
     $docBase              = 'jenkins'
     $man_user             = 'manager'
     $password             = 'manager'
