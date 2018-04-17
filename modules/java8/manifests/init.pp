@@ -20,19 +20,28 @@ class java8 (
   $hash          = '512cd62ec5174c3487ac17c61aaa89e8',
   $load_dir      = "/tmp/",
   $arch_bit      = $java8::params::arch_bit,
+  $local_repo = 'false',
+  $local_source  = undef,
 ) inherits java8::params {
 
  # validate java Standard Edition to download
   if $java_se !~ /(jre|jdk)/ {
     fail('Java SE must be either jre or jdk.')
   }
-
-  $pkg       = "${java_se}-8u${version_major}-${arch_bit}.rpm"
-  $source    = "${cookie} ${oracle_url}8u${version_major}-${version_minor}/${hash}/$pkg"
-  $pkg_path  = "${load_dir}${pkg}"
-  $java_path = "/usr/java/${java_se}1.8.0_${version_major}"
-  $env_filepath = "/etc/profile.d/app.sh"
-
+  if $local_repo == true {
+    $pkg       = "${java_se}-8u${version_major}-${arch_bit}.rpm"
+    $source    = "${local_source}/${pkg}"
+    $pkg_path  = "${load_dir}${pkg}"
+    $java_path = "/usr/java/${java_se}1.8.0_${version_major}"
+    $env_filepath = "/etc/profile.d/app.sh"
+  }
+  else {
+    $pkg       = "${java_se}-8u${version_major}-${arch_bit}.rpm"
+    $source    = "${cookie} ${oracle_url}8u${version_major}-${version_minor}/${hash}/$pkg"
+    $pkg_path  = "${load_dir}${pkg}"
+    $java_path = "/usr/java/${java_se}1.8.0_${version_major}"
+    $env_filepath = "/etc/profile.d/app.sh"
+  }
 
   # get JDK8 .pkg
   exec { 'upload_pkg':
@@ -79,3 +88,4 @@ class java8 (
 }
 #http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jdk-8u162-linux-x64.rpm
 #http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-linux-x64.rpm
+#http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.rpm
