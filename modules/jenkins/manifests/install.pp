@@ -13,7 +13,7 @@ class jenkins::install {
     name     => 'jenkins2',
     ensure   => installed,
     provider => 'yum',
-    notify   => Service[jenkins],
+    notify   => Service[tomcat],
   }
 
   #jenkins::plugins {'default':
@@ -21,11 +21,11 @@ class jenkins::install {
   #  plugins  => $jenkins::plugins,
   #}
 
-  service { 'jenkins':
-    ensure     => running,
-    name       => 'jenkins',
-    hasrestart => true,
-    hasstatus  => true,
-    enable     => true,
-  }
+  #service { 'jenkins':
+  #  ensure     => running,
+  #  name       => 'jenkins',
+  #  hasrestart => true,
+  #  hasstatus  => true,
+  #  enable     => true,
+  #}
 }
