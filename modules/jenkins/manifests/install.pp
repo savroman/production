@@ -23,7 +23,7 @@ class jenkins::install {
 
   service { 'jenkins':
     ensure     => running,
-    name       => 'jenkins2',
+    name       => 'jenkins',
     hasrestart => true,
     hasstatus  => true,
     enable     => true,
