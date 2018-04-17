@@ -13,7 +13,7 @@ class jenkins::install {
     name     => 'jenkins2',
     ensure   => installed,
     provider => 'yum',
-    notify   => Service[tomcat],
+    notify   => Service['tomcat'],
   }
 
   #jenkins::plugins {'default':
