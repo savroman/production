@@ -1,6 +1,12 @@
 class profile::jenkins::master {
 
-  include java8
+  # == Class: java8
+  #
+  class java8 {
+    local_repo   => true,
+    local_source => 'http://repo.if083/soft/'
+  }
+  
   include httpd
   include firewall
 
