@@ -7,7 +7,7 @@ class profile::jenkins::master {
 
   # Appication variables
     $tomcat_version       = '7.0.76-3.el7_4'
-    $dns_name             = "$fqdn"
+    $dns_name             = "jenkins.if083"
     $docBase              = 'jenkins'
     $man_user             = 'manager'
     $password             = 'manager'
@@ -30,18 +30,14 @@ class profile::jenkins::master {
       java_heap           => $java_heap,
     }
 
-  # Deploy application bugtrckr
-    class { 'profile::webapp::deploy':
-    }
-
   # Configure mod_proxy
     class { 'profile::webapp::proxy':
-      dns_name => $dns_name,
     }
 
   # Configure rsyslog
     class { 'rsyslog::client':
     }
+    
     rsyslog::config { 'tomcat':
       log_name            => '/var/log/tomcat/*',
       log_tag             => 'tomcat_',
