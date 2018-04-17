@@ -4,6 +4,7 @@ class profile::jenkins::master {
   include httpd
   include firewall
 
+
   # Appication variables
     $tomcat_version       = '7.0.76-3.el7_4'
     $dns_name             = "$fqdn"
