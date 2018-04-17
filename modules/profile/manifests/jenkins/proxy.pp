@@ -2,7 +2,7 @@
 #
 #
 #
-class profile::webapp::proxy
+class profile::jenkins::proxy
 {
 
  # config variables for mod_proxy
