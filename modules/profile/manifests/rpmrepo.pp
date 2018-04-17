@@ -4,7 +4,7 @@ class profile::rpmrepo {
   class { 'rpmrepo':
     repo_domain => $facts[hostname],
     repo_name   => 'Our local repopository',
-    repo_dirs   => ['soft','apps'],
+    repo_dirs   => ['soft'],
     repo_source => '/vagrant/repo'
   }
 

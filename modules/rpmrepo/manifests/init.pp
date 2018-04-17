@@ -24,8 +24,6 @@ class rpmrepo (
     mode    => '0755',
     owner   => $user,
     group   => $group,
-    recurse => true,
-    source  => "file:///${repo_source}",
   }
 
   $repo_dirs.each |String $repo_dir| {
@@ -34,6 +32,8 @@ class rpmrepo (
       mode    => '0755',
       owner   => $user,
       group   => $group,
+      recurse => true,
+      source  => "file:///${repo_source}",
       notify  => Service['httpd'],
     }
 
