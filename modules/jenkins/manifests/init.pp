@@ -7,7 +7,11 @@
 # @example
 #   include jenkins
 class jenkins (
-  $plugins  = ['sonar', 'maven-plugin', 'jquery']
+  $plugins    = ['sonar', 'maven-plugin', 'jquery'],
+  $JDK_tool   = 'false',
+  $Maven_tool = 'false',
   ){
   include jenkins::install
+
+
 }
