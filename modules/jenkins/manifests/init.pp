@@ -19,16 +19,16 @@ class jenkins (
     source => 'puppet:///modules/jenkins/plugins/plugins.txt',
   }
 
-  file { '/usr/share/tomcat/.jenkins/userContent/plugins_install.sh':
+  file { '/usr/share/tomcat/.jenkins/userContent/install_plugins.sh':
     ensure => file,
     mode   => '0744',
-    source => 'puppet:///modules/jenkins/plugins/plugins_install.sh',
+    source => 'puppet:///modules/jenkins/plugins/install_plugins.sh',
   }
 
   exec { 'plugins_install':
-    command => '/usr/share/tomcat/.jenkins/userContent/plugins_install.sh',
+    command => '/usr/share/tomcat/.jenkins/userContent/install_plugins.sh',
     path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-    require => File['/usr/share/tomcat/.jenkins/userContent/plugins_install.sh'], 
+    require => File['/usr/share/tomcat/.jenkins/userContent/install_plugins.sh'],
   }
 
 
