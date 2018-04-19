@@ -10,10 +10,10 @@
 class jenkins::install {
 
   package { 'jenk_inst':
-    name     => 'jenkins2',
-    ensure   => installed,
-    provider => 'yum',
-    notify   => Service['tomcat'],
+    name      => 'jenkins2',
+    ensure    => installed,
+    provider  => 'yum',
+    subscribe => Service['tomcat'],
   }
 
   #jenkins::plugins {'default':
