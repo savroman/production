@@ -68,9 +68,9 @@ class profile::jenkins::master {
   #    url      => "http://repo.if083",
   #    subpath  => "apps"
   #  }
-  file { "/usr/share/tomcat/webapps/${docBase}":
-    ensure => apsent,
-    mode => '0644',
+  file { "remove_${docBase}":
+    path   => "/usr/share/tomcat/webapps/${docBase}",
+    ensure => absent,
   }
   include jenkins
 
