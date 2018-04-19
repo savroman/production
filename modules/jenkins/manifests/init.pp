@@ -8,8 +8,8 @@
 #   include jenkins
 class jenkins (
   $plugins    = ['sonar', 'maven-plugin', 'jquery'],
-  $JDK_tool   = 'false',
-  $Maven_tool = 'false',
+  #$JDK_tool   = 'false',
+  #$Maven_tool = 'false',
   ){
   include jenkins::install
 
