@@ -9,7 +9,7 @@ set -o pipefail
 REF_DIR=${REF:-/usr/share/tomcat/.jenkins/plugins}
 FAILED="$REF_DIR/failed-plugins.txt"
 
-. /usr/local/bin/jenkins-support
+#. /usr/local/bin/jenkins-support
 
 getLockFile() {
     printf '%s' "$REF_DIR/${1}.lock"
