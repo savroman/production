@@ -26,7 +26,8 @@ class jenkins (
   }
 
   exec { 'plugins_install':
-    command => '/usr/share/tomcat/.jenkins/userContent/install_plugins.sh',
+    command => '/usr/share/tomcat/.jenkins/userContent/install_plugins.sh\
+     < /usr/share/tomcat/.jenkins/userContent/plugins.txt',
     path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
     require => File['/usr/share/tomcat/.jenkins/userContent/install_plugins.sh'],
   }
