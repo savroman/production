@@ -18,7 +18,7 @@ class jenkins (
     mode => '0644',
   }
 
-  if (${jdk_tool} == 'true') {
+  if ($jdk_tool == 'true') {
     file { '/usr/share/tomcat/.jenkins/init.groovy.d/java.groovy':
       ensure => file,
       mode   => '0744',
@@ -26,7 +26,7 @@ class jenkins (
     }
   }
 
-  if (${maven_tool} == 'true') {
+  if ($maven_tool == 'true') {
     file { '/usr/share/tomcat/.jenkins/init.groovy.d/maven.groovy':
       ensure => file,
       mode   => '0744',
