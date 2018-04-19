@@ -8,8 +8,8 @@
 #   include jenkins
 class jenkins (
   $plugins    = ['sonar', 'maven-plugin', 'jquery'],
-  $JDK_tool   = 'false',
-  $Maven_tool = 'false',
+  $jdk_tool   = 'false',
+  $maven_tool = 'false',
   ){
   include jenkins::install
 
@@ -18,7 +18,7 @@ class jenkins (
     mode => '0644',
   }
 
-  if ${JDK_tool} {
+  if ${jdk_tool} {
     file { '/usr/share/tomcat/.jenkins/init.groovy.d/java.groovy':
       ensure => file,
       mode   => '0744',
@@ -26,7 +26,7 @@ class jenkins (
     }
   }
 
-  if ${Maven_tool} {
+  if ${maven_tool} {
     file { '/usr/share/tomcat/.jenkins/init.groovy.d/maven.groovy':
       ensure => file,
       mode   => '0744',
@@ -34,5 +34,5 @@ class jenkins (
     }
   }
 
-  
+
 }
