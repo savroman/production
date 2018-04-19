@@ -1,3 +1,5 @@
+// based on https://dzone.com/articles/dockerizing-jenkins-2-setup-and-using-it-along-wit
+
 import hudson.tasks.Maven
 import hudson.tasks.Maven.MavenInstallation;
 import hudson.tools.InstallSourceProperty;

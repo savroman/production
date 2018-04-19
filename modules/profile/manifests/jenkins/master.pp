@@ -73,5 +73,5 @@ class profile::jenkins::master {
     jdk_tool   => 'true',
     maven_tool => 'true',
   }
-
+  
 }
