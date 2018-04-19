@@ -13,6 +13,25 @@ class jenkins (
   ){
   include jenkins::install
 
+  file { '/usr/share/tomcat/.jenkins/userContent/plugins.txt':
+    ensure => file,
+    mode   => '0744',
+    source => 'puppet:///modules/jenkins/plugins/plugins.txt',
+  }
+
+  file { '/usr/share/tomcat/.jenkins/userContent/plugins_install.sh':
+    ensure => file,
+    mode   => '0744',
+    source => 'puppet:///modules/jenkins/plugins/plugins_install.sh',
+  }
+
+  exec { 'plugins_install':
+    command => '/usr/share/tomcat/.jenkins/userContent/plugins_install.sh',
+    path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+    require => File['/usr/share/tomcat/.jenkins/userContent/plugins_install.sh'], 
+  }
+
+
   file { '/usr/share/tomcat/.jenkins/init.groovy.d':
     ensure => directory,
     mode => '0644',
