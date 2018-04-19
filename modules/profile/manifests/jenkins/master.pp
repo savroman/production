@@ -70,8 +70,8 @@ class profile::jenkins::master {
   #  }
 
   class { 'jenkins':
-    JDK_tool   => 'true',
-    Maven_tool => 'true',
+    jdk_tool   => 'true',
+    maven_tool => 'true',
   }
 
 }
