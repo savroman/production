@@ -19,7 +19,7 @@ class profile::jenkins::master {
     $password             = 'manager'
 
   # tomcat variables
-    $java_home            = '/usr/java/default/jre'
+    $java_home            = '/usr/java/default/jdk'
     $java_heap            = '1024m'
 
   # firewall variables
@@ -68,9 +68,7 @@ class profile::jenkins::master {
   #    url      => "http://repo.if083",
   #    subpath  => "apps"
   #  }
-  jenkins::remove {'jenkins':
-    webapps_path => "/usr/share/tomcat/webapps/${docBase}"
-  }
+
 
   include jenkins
 
