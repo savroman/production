@@ -14,7 +14,7 @@ class tomcat
   $man_user           = 'admin',
   $password           = 'admin',
 
-# Tomcat variables  
+# Tomcat variables
 
   $java_home          = '/usr/java/default/jre',
   $java_heap          = '512m',
@@ -35,7 +35,7 @@ class tomcat
 
   $appdir             = "$catalina_home/webapps/$docBase"
 
-  if ($docBase != 'sample') {
+  if ($docBase != 'sample') and ($docBase != 'jenkins') {
     file { $appdir:
       ensure          => directory,
       owner           => 'root',
@@ -87,7 +87,7 @@ class tomcat
 
 
 
-  # Start tomcat 
+  # Start tomcat
 
 
   service { 'tomcat':
