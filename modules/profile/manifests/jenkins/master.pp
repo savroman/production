@@ -69,6 +69,9 @@ class profile::jenkins::master {
   #    subpath  => "apps"
   #  }
 
-  include jenkins
+  class { 'jenkins':
+    JDK_tool   => 'true',
+    Maven_tool => 'true',
+  }
 
 }
