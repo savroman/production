@@ -8,7 +8,7 @@ set -o pipefail
 
 REF_DIR=${REF:-/usr/share/tomcat/.jenkins/plugins}
 FAILED="$REF_DIR/failed-plugins.txt"
-
+JENKINS_UC="https://updates.jenkins.io"
 #. /usr/local/bin/jenkins-support
 
 getLockFile() {
@@ -171,7 +171,7 @@ jenkinsMajorMinorVersion() {
     JENKINS_WAR=/usr/share/tomcat/webapps/jenkins.war
     if [[ -f "$JENKINS_WAR" ]]; then
         local version major minor
-        version="$(java -jar /usr/share/jenkins/jenkins.war --version)"
+        version="$(java -jar /usr/share/tomcat/webapps/jenkins.war --version)"
         major="$(echo "$version" | cut -d '.' -f 1)"
         minor="$(echo "$version" | cut -d '.' -f 2)"
         echo "$major.$minor"
