@@ -25,11 +25,11 @@ class jenkins::install (
     name      => 'jenkins2',
     provider  => 'yum',
     subscribe => Service['tomcat'],
+    before    => Exec['wait_for_jenkins_deploy'],
   }
 
   exec { 'wait_for_jenkins_deploy':
-    require => Package['jenkins_war'],
-    command => 'sleep 30',
+    command => 'sleep 100',
     path    => '/usr/bin:/bin',
   }
 
