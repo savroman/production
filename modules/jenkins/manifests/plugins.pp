@@ -15,7 +15,7 @@ class jenkins::plugins (
   $plugin_list_file,
   $plugin_repo_url  = $jenkins::plugin_repo_url,
   ){
-  $plugin_dir = "$jenkns::jenkins_home/plugins"
+  $plugin_dir = "${jenkns::jenkins_home}/plugins"
 
   file { '/tmp/plugins.txt':
     ensure => file,
