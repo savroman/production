@@ -4,8 +4,8 @@
 
 #!/usr/bin/env bash
 
-PLUGIN_REPO='<%= $java_tool_name %>'
-PLUGIN_DIR='<%= $java_tool_name %>'
+PLUGIN_REPO='<%= $plugin_repo_url %>'
+PLUGIN_DIR='<%= $plugin_dir %>'
 
 while IFS='' read -r line || [[ -n "$plugin" ]]; do
     if [ -f ${PLUGIN_DIR}/${plugin}.jpi ]; then
