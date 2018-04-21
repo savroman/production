@@ -7,20 +7,23 @@
 #    set the path to reposutory with plugins
 #
 # @ example
-#    class { 'base::firewall':
-#      dport => '80',
+#    class { 'jenkins::plugins':
+#      plugin_list_file = 'puppet:///modules/profile/plugins.txt'
+#      plugin_repo_url  = http://jenkins/,
 #    }
 
 class jenkins::plugins (
   $plugin_list_file,
   $plugin_repo_url  = $jenkins::plugin_repo_url,
   ){
+
   $plugin_dir = "${jenkins::jenkins_home}/plugins"
+  $url        = $jenkins::jenkins_url
 
   file { '/tmp/plugins.txt':
     ensure => file,
     mode   => '0644',
-    source => "$plugin_list_file",
+    source => $plugin_list_file,
   }
 
   file { '/tmp/install_plugins.sh':
@@ -41,7 +44,7 @@ class jenkins::plugins (
   #restart jenkins
   exec { 'restart_jenkins':
     command => "java -jar jenkins-cli.jar -s ${url}/ restart",
-    path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-    # refreshonly => true,
+    path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+    require => Exec['plugins_install'],
   }
 }
