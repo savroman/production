@@ -29,7 +29,7 @@ class jenkins::install (
   }
 
   exec { 'wait_for_jenkins_deploy':
-    command   => "grep '<hudson>' ${$jenkins_home_dir}/config.xml",
+    command   => "grep hudson ${$jenkins_home_dir}/config.xml",
     path      => '/usr/bin:/bin',
     tries     => 3,
     try_sleep => 15,
