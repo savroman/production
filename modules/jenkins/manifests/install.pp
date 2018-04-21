@@ -31,7 +31,7 @@ class jenkins::install (
   exec { 'wait_for_jenkins_deploy':
     command => '/bin/true',
     path    => '/usr/bin:/bin',
-    onlyif  => "/usr/bin/test -e ${jenkins_home_dir}",
+    onlyif  => "/usr/bin/test -d ${jenkins_home_dir}",
   }
 
   ### --- TOOLS INSTALLATION PART ---
@@ -40,7 +40,7 @@ class jenkins::install (
   file { "${jenkins_home_dir}/init.groovy.d":
     ensure  => directory,
     mode    => '0644',
-    require => [ Package['jenkins_war'], Exec['wait_for_jenkins_deploy'] ], 
+    require => [ Package['jenkins_war'], Exec['wait_for_jenkins_deploy'] ],
   }
 
   # install jenkins java tool
