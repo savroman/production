@@ -8,7 +8,6 @@
 #   include jenkins::install
 #
 class jenkins::install (
-  $url                = $jenkins::jenkins_url,
   $jenkins_home_dir   = $jenkins::jenkins_home,
   $java_tool_install  = $jenkins::jdk_tool,
   $java_tool_name     = $jenkins::jdk_tool_name,
@@ -31,15 +30,15 @@ class jenkins::install (
   exec { 'wait_for_jenkins_deploy':
     require => Package['jenkins_war'],
     command => 'sleep 30',
-    path => "/usr/bin:/bin",
+    path    => '/usr/bin:/bin',
   }
 
   ### --- TOOLS INSTALLATION PART ---
 
   # create folder for groovy scripts
   file { "${jenkins_home_dir}/init.groovy.d":
-    ensure => directory,
-    mode   => '0644',
+    ensure  => directory,
+    mode    => '0644',
     require => Exec['wait_for_jenkins_deploy'],
   }
 
