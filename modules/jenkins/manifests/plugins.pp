@@ -26,7 +26,7 @@ class jenkins::plugins (
   file { "${jenkns::jenkins_home}/userContent/install_plugins.sh":
     ensure  => file,
     mode    => '0744',
-    content => epp('jenkins/plugins/install_plugins.epp', {
+    content => epp('jenkins/plugins/install_plugins.sh.epp', {
       plugin_repo_url => $plugin_repo_url,
       plugin_dir      => $plugin_dir}
       ),
