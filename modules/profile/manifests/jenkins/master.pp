@@ -9,7 +9,7 @@ class profile::jenkins::master {
 
   include httpd
   include firewall
-    
+
   # Configure tomcat
     class { 'tomcat':
       tomcat_version      => '7.0.76-3.el7_4',
@@ -68,6 +68,6 @@ class profile::jenkins::master {
 
   class { 'jenkins::plugins':
     plugin_repo_url  => 'http://repo.if083/soft/jenkins/plugins',
-    plugin_list_file => file('profile/plugins.txt')
+    plugin_list_file => 'puppet:///modules/profile/plugins.txt',
   }
 }

@@ -20,7 +20,7 @@ class jenkins::plugins (
   file { "${jenkns::jenkins_home}/userContent/plugins.txt":
     ensure => file,
     mode   => '0644',
-    source => $plugin_list_file,
+    source => "$plugin_list_file",
   }
 
   file { "${jenkns::jenkins_home}/userContent/install_plugins.sh":
