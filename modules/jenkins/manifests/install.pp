@@ -39,7 +39,7 @@ class jenkins::install (
   file { "${jenkins_home_dir}/init.groovy.d":
     ensure  => directory,
     mode    => '0644',
-    require => [ Package ['jenkins_war'], Exec['wait_for_jenkins_deploy'] ],
+    require => [ Package['jenkins_war'], Exec['wait_for_jenkins_deploy'] ],
   }
 
   # install jenkins java tool
