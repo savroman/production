@@ -20,6 +20,14 @@ class jenkins::plugins (
   $plugin_dir = "${jenkins::jenkins_home}/plugins"
   $url        = $jenkins::jenkins_url
 
+  file { "${plugin_dir}":
+    ensure  => directory,
+    mode    => '0755',
+    owner   => 'tomcat',
+    group   => 'tomcat',
+    before  => Exec['restart_jenkins'],
+  }
+
   file { '/tmp/plugins.txt':
     ensure => file,
     mode   => '0644',
