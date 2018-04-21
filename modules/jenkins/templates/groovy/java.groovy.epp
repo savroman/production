@@ -1,6 +1,6 @@
 <%- | String $java_tool_name,
       String $java_tool_url,
-      String $jave_tool_subdir,
+      String $java_tool_subdir,
 | -%>
 
 // based on https://dzone.com/articles/dockerizing-jenkins-2-setup-and-using-it-along-wit
