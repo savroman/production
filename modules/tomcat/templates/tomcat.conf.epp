@@ -33,7 +33,7 @@ CATALINA_HOME="/usr/share/tomcat"
 
 # System-wide tmp
 CATALINA_TMPDIR="/var/cache/tomcat/temp"
-
+CATALINA_OPTS="-DJENKINS_HOME=/usr/share/tomcat/.jenkins -Xmx1024m"
 # You can pass some parameters to java here if you wish to
 #
 JAVA_OPTS="-Xmin<%= $java_heap %> -Xmax<%= $java_heap %>"
