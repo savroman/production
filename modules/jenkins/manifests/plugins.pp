@@ -15,15 +15,15 @@ class jenkins::plugins (
   $plugin_list_file,
   $plugin_repo_url  = $jenkins::plugin_repo_url,
   ){
-  $plugin_dir = "${jenkns::jenkins_home}/plugins"
+  $plugin_dir = "$jenkns::jenkins_home/plugins"
 
-  file { "${jenkns::jenkins_home}/userContent/plugins.txt":
+  file { '/tmp/plugins.txt':
     ensure => file,
     mode   => '0644',
     source => "$plugin_list_file",
   }
 
-  file { "${jenkns::jenkins_home}/userContent/install_plugins.sh":
+  file { '/tmp/install_plugins.sh':
     ensure  => file,
     mode    => '0744',
     content => epp('jenkins/plugins/install_plugins.sh.epp', {
@@ -33,8 +33,8 @@ class jenkins::plugins (
   }
 
   exec { 'plugins_install':
-    command => "${jenkns::jenkins_home}/userContent/install_plugins.sh ${jenkns::jenkins_home}/userContent/plugins.txt",
+    command => '/tmp/install_plugins.sh /tmp/plugins.txt",
     path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-    require => File["${jenkns::jenkins_home}/userContent/install_plugins.sh"],
+    require => File['/tmp/install_plugins.sh'],
   }
 }
