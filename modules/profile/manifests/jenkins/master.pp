@@ -70,8 +70,20 @@ class profile::jenkins::master {
   #  }
 
   class { 'jenkins':
-    jdk_tool   => 'true',
-    maven_tool => 'true',
+    jenkins_home    => '/usr/share/tomcat/.jenkins',
+    jdk_tool        => 'true',
+    jdk_tool_name   => 'jdk8',
+    jdk_tool_url    => 'http://repo.if083/soft/jdk-8u172-linux-x64.tar.gz',
+    jdk_tool_subdir => 'jdk1.8.0_172',
+    mvn_tool        => 'true',
+    mvn_tool_name   => 'maven3',
+    mvn_tool_url    => 'http://repo.if083/soft/apache-maven-3.5.3-bin.tar.gz',
+    mvn_tool_subdir => 'apache-maven-3.5.3',
   }
-  
+
+
+  class { 'jenkins::plugins':
+    plugin_repo_url  => 'http://repo.if083/soft/jenkins/plugins',
+    plugin_list_file =>
+  }
 }

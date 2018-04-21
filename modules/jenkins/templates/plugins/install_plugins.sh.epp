@@ -1,0 +1,17 @@
+<%- | String $plugin_repo_url,
+      String $plugin_dir,
+| -%>
+
+#!/usr/bin/env bash
+
+PLUGIN_REPO='<%= $java_tool_name %>'
+PLUGIN_DIR='<%= $java_tool_name %>'
+
+while IFS='' read -r line || [[ -n "$plugin" ]]; do
+    if [-f "${PLUGIN_DIR}//${plugin}.jpi"]; then
+      echo "${line} is already installed"
+    else
+      echo "Install plugin: ${plugin}"
+      wget ${PLUGIN_REPO}/${plugin}.jpi -P ${PLUGIN_DIR}
+    fi
+done < "${1}"
