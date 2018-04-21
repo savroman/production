@@ -7,6 +7,7 @@
 # @example
 #   include jenkins
 class jenkins (
+  $jenkins_url     = 'http://192.168.56.170:8080/jenkins'
   $jenkins_home    = '/usr/share/tomcat/.jenkins',
   $jdk_tool        = false,
   $jdk_tool_name   = '',
