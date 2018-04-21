@@ -25,12 +25,13 @@ class jenkins::install (
     name      => 'jenkins2',
     provider  => 'yum',
     subscribe => Service['tomcat'],
-    before    => Exec['wait_for_jenkins_deploy'],
+    #before    => Exec['wait_for_jenkins_deploy'],
   }
 
   exec { 'wait_for_jenkins_deploy':
-    command => 'sleep 100',
+    command => '/bin/true',
     path    => '/usr/bin:/bin',
+    onlyif  => "/usr/bin/test -e ${jenkins_home_dir}",
   }
 
   ### --- TOOLS INSTALLATION PART ---
@@ -39,7 +40,7 @@ class jenkins::install (
   file { "${jenkins_home_dir}/init.groovy.d":
     ensure  => directory,
     mode    => '0644',
-    require => [ Package['jenkins_war'], Exec['wait_for_jenkins_deploy'] ],
+    require => [ Package['jenkins_war'], Exec['wait_for_jenkins_deploy'] ], 
   }
 
   # install jenkins java tool
