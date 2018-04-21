@@ -8,6 +8,7 @@
 #   include jenkins::install
 #
 class jenkins::install (
+  $url                = $jenkins::jenkins_url,
   $jenkins_home_dir   = $jenkins::jenkins_home,
   $java_tool_install  = $jenkins::jdk_tool,
   $java_tool_name     = $jenkins::jdk_tool_name,
@@ -20,11 +21,17 @@ class jenkins::install (
   ){
 
   # install custom jenkins rpm package
-  package { 'jenk_inst':
+  package { 'jenkins_war':
     ensure    => installed,
     name      => 'jenkins2',
     provider  => 'yum',
     subscribe => Service['tomcat'],
+  }
+
+  exec { 'wait_for_jenkins_deploy':
+    require => Package['jenkins_war'],
+    command => 'sleep 30',
+    path => "/usr/bin:/bin",
   }
 
   ### --- TOOLS INSTALLATION PART ---
@@ -33,6 +40,7 @@ class jenkins::install (
   file { "${jenkins_home_dir}/init.groovy.d":
     ensure => directory,
     mode   => '0644',
+    require => Exec['wait_for_jenkins_deploy'],
   }
 
   # install jenkins java tool
@@ -46,6 +54,7 @@ class jenkins::install (
       ensure  => file,
       mode    => '0744',
       content => epp('jenkins/groovy/java.groovy.epp', $java_tool_hash),
+      require => File["${jenkins_home_dir}/init.groovy.d"],
     }
   }
 
@@ -60,13 +69,8 @@ class jenkins::install (
       ensure  => file,
       mode    => '0744',
       content => epp('jenkins/groovy/maven.groovy.epp', $maven_tool_hash),
+      require => File["${jenkins_home_dir}/init.groovy.d"],
     }
   }
-  #service { 'jenkins':
-  #  ensure     => running,
-  #  name       => 'jenkins',
-  #  hasrestart => true,
-  #  hasstatus  => true,
-  #  enable     => true,
-  #}
+
 }
