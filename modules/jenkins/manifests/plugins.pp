@@ -43,7 +43,7 @@ class jenkins::plugins (
 
   #restart jenkins
   exec { 'restart_jenkins':
-    command => "java -jar jenkins-cli.jar -s ${url}/ restart",
+    command => "/usr/share/tomcat/webapps/WEB-INF/java -jar jenkins-cli.jar -s ${url}/ restart",
     path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
     require => Exec['plugins_install'],
   }
