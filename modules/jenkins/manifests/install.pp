@@ -32,7 +32,7 @@ class jenkins::install (
     command   => "grep hudson ${$jenkins_home_dir}/config.xml",
     path      => '/usr/bin:/bin',
     tries     => 3,
-    try_sleep => 15,
+    try_sleep => 60,
   }
 
   ### --- TOOLS INSTALLATION PART ---
