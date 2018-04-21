@@ -33,8 +33,8 @@ class jenkins::plugins (
   }
 
   exec { 'plugins_install':
-    command => '/usr/share/tomcat/.jenkins/userContent/install_plugins.sh /usr/share/tomcat/.jenkins/userContent/plugins.txt',
+    command => "${jenkns::jenkins_home}/userContent/install_plugins.sh ${jenkns::jenkins_home}/userContent/plugins.txt",
     path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-    require => File['/usr/share/tomcat/.jenkins/userContent/install_plugins.sh'],
+    require => File["${jenkns::jenkins_home}/userContent/install_plugins.sh"],
   }
 }
