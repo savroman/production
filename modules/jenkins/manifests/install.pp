@@ -50,6 +50,8 @@ class jenkins::install (
   file { "${jenkins_home_dir}/init.groovy.d":
     ensure  => directory,
     mode    => '0644',
+    owner   => 'tomcat',
+    group   => 'tomcat',
     require => Exec['wait_for_jenkins_deploy'],
   }
 
