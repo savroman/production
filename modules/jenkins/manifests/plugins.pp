@@ -1,28 +1,40 @@
 # Class: jenkins::plugins
 # ===========================
 #
-# Use it to open ports on severs
+# Use it to install jenkins plugin listed in file
 #
-# @ param dport
-#    enter the number of port you wish to open
+# @ param plugin_repo_url
+#    set the path to reposutory with plugins
 #
-# @example
+# @ example
 #    class { 'base::firewall':
 #      dport => '80',
 #    }
 
-
-# == Define: base::firewall
-#
-define jenkins::plugins (
-  $plugins = undef,
+class jenkins::plugins (
+  $plugin_list_file,
+  $plugin_repo_url  = $jenkins::plugin_repo_url,
   ){
-  $plugins.each |String $plugin| {
-    exec { "install_${plugin}":
-      command => "wget http://updates.jenkins-ci.org/latest/${plugin}.hpi",
-      path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-      cwd     => '/var/lib/jenkins/plugins',
-      creates => "/var/lib/jenkins/plugins/${plugin}.hpi",
-    }
+  $plugin_dir = "${jenkns::jenkins_home}/plugins"
+
+  file { "${jenkns::jenkins_home}/userContent/plugins.txt":
+    ensure => file,
+    mode   => '0644',
+    source => $plugin_list_file,
+  }
+
+  file { "${jenkns::jenkins_home}/userContent/install_plugins.sh":
+    ensure  => file,
+    mode    => '0744',
+    content => epp('jenkins/plugins/install_plugins.epp', {
+      plugin_repo_url => $plugin_repo_url,
+      plugin_dir      => $plugin_dir}
+      ),
+  }
+
+  exec { 'plugins_install':
+    command => '/usr/share/tomcat/.jenkins/userContent/install_plugins.sh /usr/share/tomcat/.jenkins/userContent/plugins.txt',
+    path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+    require => File['/usr/share/tomcat/.jenkins/userContent/install_plugins.sh'],
   }
 }

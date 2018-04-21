@@ -1,6 +1,6 @@
-define base::ssh_user (
+define sshuser (
     $ssh_user     = 'admin',
-    $key          = file('base/default.pub'),
+    $key          = file('profile/default.pub'),
 ){
   # Choose sudo group for ssh_user
   if $::osfamily == 'RedHat' {
@@ -11,6 +11,7 @@ define base::ssh_user (
   }
 
   # Configure  ssh_authorized_key
+  $dns_name     = $facts['networking']['fqdn']
   $ssh          = "/home/${ssh_user}/.ssh"
   user { "$ssh_user":
     ensure      => present,
@@ -28,11 +29,16 @@ define base::ssh_user (
     require     => User["$ssh_user"],
   }
 
-  ssh_authorized_key { "${ssh_user}@$fqdn":
+  ssh_authorized_key { "${ssh_user}@$dns_name":
     ensure      => present,
     user        => $ssh_user,
     type        => 'ssh-rsa',
     key         => $key,
     require     => File["$ssh"],    
   } 
+
+# Configure sudo user
+  class { 'sshuser::sudo':
+    ssh_user    => $ssh_user,
+  }
 }

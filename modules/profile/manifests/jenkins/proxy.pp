@@ -6,8 +6,8 @@ class profile::jenkins::proxy
 {
 
  # config variables for mod_proxy
- $dns_name=$::profile::jenkins::master::dns_name
- $proxy_conf_file    = '/etc/httpd/conf.d/tomcat.conf'
+ $dns_name        = $::profile::jenkins::master::dns_name,
+ $proxy_conf_file = '/etc/httpd/conf.d/tomcat.conf',
 
 # Configure rsyslog
 #  class {'rsyslog::client':

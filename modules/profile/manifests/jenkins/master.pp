@@ -9,31 +9,15 @@ class profile::jenkins::master {
 
   include httpd
   include firewall
-
-
-  # Appication variables
-    $tomcat_version       = '7.0.76-3.el7_4'
-    $dns_name             = "$fqdn"
-    $docBase              = 'jenkins'
-    $man_user             = 'manager'
-    $password             = 'manager'
-
-  # tomcat variables
-    $java_home            = '/usr/java/default/'
-    $java_heap            = '1024m'
-
-  # firewall variables
-    $dports               = ['80', '8080']
-
+    
   # Configure tomcat
     class { 'tomcat':
-      tomcat_version      => $tomcat_version,
-      dns_name            => $dns_name,
-      docBase             => $docBase,
-      man_user            => $man_user,
-      password            => $password,
-      java_home           => $java_home,
-      java_heap           => $java_heap,
+      tomcat_version      => '7.0.76-3.el7_4',
+      dns_name            => $facts['networking']['fqdn'],
+      man_user            => 'manager',
+      password            => 'manager',
+      java_home           => '/usr/java/default/',
+      java_heap           => '1024m',
     }
 
   # Configure mod_proxy
@@ -53,7 +37,7 @@ class profile::jenkins::master {
 
   # Configure firewall
     firewall::openport { 'tomcat':
-      dports              => $dports,
+      dports              => ['80', '8080'],
     }
 
   # Configure selinux
@@ -70,8 +54,20 @@ class profile::jenkins::master {
   #  }
 
   class { 'jenkins':
-    jdk_tool   => 'true',
-    maven_tool => 'true',
+    jenkins_home    => '/usr/share/tomcat/.jenkins',
+    jdk_tool        => 'true',
+    jdk_tool_name   => 'jdk8',
+    jdk_tool_url    => 'http://repo.if083/soft/jdk-8u172-linux-x64.tar.gz',
+    jdk_tool_subdir => 'jdk1.8.0_172',
+    mvn_tool        => 'true',
+    mvn_tool_name   => 'maven3',
+    mvn_tool_url    => 'http://repo.if083/soft/apache-maven-3.5.3-bin.tar.gz',
+    mvn_tool_subdir => 'apache-maven-3.5.3',
   }
-  
+
+
+  class { 'jenkins::plugins':
+    plugin_repo_url  => 'http://repo.if083/soft/jenkins/plugins',
+    plugin_list_file => file('profile/plugins.txt')
+  }
 }
