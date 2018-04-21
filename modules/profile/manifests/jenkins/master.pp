@@ -9,31 +9,15 @@ class profile::jenkins::master {
 
   include httpd
   include firewall
-
-
-  # Appication variables
-    $tomcat_version       = '7.0.76-3.el7_4'
-    $dns_name             = "$fqdn"
-    $docBase              = 'jenkins'
-    $man_user             = 'manager'
-    $password             = 'manager'
-
-  # tomcat variables
-    $java_home            = '/usr/java/default/'
-    $java_heap            = '1024m'
-
-  # firewall variables
-    $dports               = ['80', '8080']
-
+    
   # Configure tomcat
     class { 'tomcat':
-      tomcat_version      => $tomcat_version,
-      dns_name            => $dns_name,
-      docBase             => $docBase,
-      man_user            => $man_user,
-      password            => $password,
-      java_home           => $java_home,
-      java_heap           => $java_heap,
+      tomcat_version      => '7.0.76-3.el7_4',
+      dns_name            => $facts['networking']['fqdn'],
+      man_user            => 'manager',
+      password            => 'manager',
+      java_home           => '/usr/java/default/',
+      java_heap           => '1024m',
     }
 
   # Configure mod_proxy
@@ -53,7 +37,7 @@ class profile::jenkins::master {
 
   # Configure firewall
     firewall::openport { 'tomcat':
-      dports              => $dports,
+      dports              => ['80', '8080'],
     }
 
   # Configure selinux
@@ -84,6 +68,6 @@ class profile::jenkins::master {
 
   class { 'jenkins::plugins':
     plugin_repo_url  => 'http://repo.if083/soft/jenkins/plugins',
-    plugin_list_file =>
+    plugin_list_file => file('profile/plugins.txt')
   }
 }
