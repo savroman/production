@@ -67,7 +67,7 @@ class profile::jenkins::master {
 
 
   class { 'jenkins::plugins':
-    plugin_repo_url  => 'http://repo.if083/soft/jenkins/plugins',
+    plugin_repo_url  => 'http://repo.if083/soft/jenkins/plugins/',
     plugin_list_file => 'puppet:///modules/profile/plugins.txt',
   }
 }

@@ -33,7 +33,7 @@ class jenkins::plugins (
   }
 
   exec { 'plugins_install':
-    command => '/tmp/install_plugins.sh /tmp/plugins.txt',
+    command => '/tmp/install_plugins.sh /tmp/plugins.txt plugins.log 2>&1',
     path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
     require => File['/tmp/install_plugins.sh'],
   }
