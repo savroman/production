@@ -28,19 +28,17 @@ class java8 (
   if $java_se !~ /(jre|jdk)/ {
     fail('Java SE must be either jre or jdk.')
   }
+  $pkg       = "${java_se}-8u${version_major}-${arch_bit}.rpm"
+  $pkg_path  = "${load_dir}${pkg}"
+  $java_path = "/usr/java/${java_se}1.8.0_${version_major}"
+  $env_filepath = "/etc/profile.d/app.sh"
+
+
   if $local_repo == 'true' {
-    $pkg       = "${java_se}-8u${version_major}-${arch_bit}.rpm"
     $source    = "${local_source}/${pkg}"
-    $pkg_path  = "${load_dir}${pkg}"
-    $java_path = "/usr/java/${java_se}1.8.0_${version_major}"
-    $env_filepath = "/etc/profile.d/app.sh"
   }
   else {
-    $pkg       = "${java_se}-8u${version_major}-${arch_bit}.rpm"
     $source    = "${cookie} ${oracle_url}8u${version_major}-${version_minor}/${hash}/$pkg"
-    $pkg_path  = "${load_dir}${pkg}"
-    $java_path = "/usr/java/${java_se}1.8.0_${version_major}"
-    $env_filepath = "/etc/profile.d/app.sh"
   }
 
   # get JDK8 .pkg
