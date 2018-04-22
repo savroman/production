@@ -8,8 +8,8 @@ class profile::jenkins::proxy
  $proxy_conf_file = '/etc/httpd/conf.d/tomcat.conf'
 
 # Configure rsyslog
-#  class {'rsyslog::client':
-# }
+  class {'rsyslog::client':}
+  
  rsyslog::config {'httpd':
    log_name          => '/var/log/httpd/*',
    log_tag           => 'httpd_',
