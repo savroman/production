@@ -28,10 +28,11 @@ class profile::jenkins::master {
     class { 'rsyslog::client':
     }
 
-    rsyslog::config { 'tomcat':
+  # Add sending logs from tomcat rsyslog
+    rsyslog::config { 'tomcat_jenkins':
       log_name            => '/var/log/tomcat/*',
-      log_tag             => 'tomcat_',
-      app_name            => 'tomcat',
+      log_tag             => 'tomcat_jenkins_',
+      app_name            => 'tomcat_jenkins',
       severity            => 'info',
     }
 
@@ -66,9 +67,20 @@ class profile::jenkins::master {
     require         => Service['tomcat'],
   }
 
-
+  #install plugins from list in modules/profile/files/plugins.txt
   class { 'jenkins::plugins':
     plugin_repo_url  => 'http://repo.if083/soft/jenkins/plugins/',
     plugin_list_file => 'puppet:///modules/profile/plugins.txt',
   }
+
+  # Add sending logs from tomcat rsyslog
+  rsyslog::config { 'jenkins':
+    log_name            => '/usr/share/tomcat/.jenkins/log/tasks',
+    log_tag             => 'jenkins_',
+    app_name            => 'jenkins',
+    severity            => 'info',
+  }
+
+  # Add fpm tool to create packages
+  include fpm
 }
