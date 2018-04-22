@@ -15,9 +15,9 @@ class java8 (
   $java_se       = 'jdk',
   $oracle_url    = 'http://download.oracle.com/otn-pub/java/jdk/',
   $cookie        = '--no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie"',
-  $version_major = '172',
-  $version_minor = 'b11',
-  $hash          = '512cd62ec5174c3487ac17c61aaa89e8',
+  $version_major = '162',
+  $version_minor = 'b12',
+  $hash          = '0da788060d494f5095bf8624735fa2f1',
   $load_dir      = "/tmp/",
   $arch_bit      = $java8::params::arch_bit,
   $local_repo    = 'false',
@@ -28,19 +28,17 @@ class java8 (
   if $java_se !~ /(jre|jdk)/ {
     fail('Java SE must be either jre or jdk.')
   }
+  $pkg       = "${java_se}-8u${version_major}-${arch_bit}.rpm"
+  $pkg_path  = "${load_dir}${pkg}"
+  $java_path = "/usr/java/${java_se}1.8.0_${version_major}"
+  $env_filepath = "/etc/profile.d/app.sh"
+
+
   if $local_repo == 'true' {
-    $pkg       = "${java_se}-8u${version_major}-${arch_bit}.rpm"
     $source    = "${local_source}/${pkg}"
-    $pkg_path  = "${load_dir}${pkg}"
-    $java_path = "/usr/java/${java_se}1.8.0_${version_major}"
-    $env_filepath = "/etc/profile.d/app.sh"
   }
   else {
-    $pkg       = "${java_se}-8u${version_major}-${arch_bit}.rpm"
     $source    = "${cookie} ${oracle_url}8u${version_major}-${version_minor}/${hash}/$pkg"
-    $pkg_path  = "${load_dir}${pkg}"
-    $java_path = "/usr/java/${java_se}1.8.0_${version_major}"
-    $env_filepath = "/etc/profile.d/app.sh"
   }
 
   # get JDK8 .pkg

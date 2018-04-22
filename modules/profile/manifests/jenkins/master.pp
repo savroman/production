@@ -3,8 +3,9 @@ class profile::jenkins::master {
   # == Class: java8
   #
   class { 'java8':
-    local_repo   => 'true',
-    local_source => 'http://repo.if083/soft/',
+    version_major => '172',
+    local_repo    => 'true',
+    local_source  => 'http://repo.if083/soft/',
   }
 
   include httpd
