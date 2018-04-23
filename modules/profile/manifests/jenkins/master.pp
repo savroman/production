@@ -22,8 +22,8 @@ class profile::jenkins::master {
     }
 
   # Configure mod_proxy
-    class { 'profile::jenkins::proxy':
-    }
+  #  class { 'profile::jenkins::proxy':
+  #  }
 
   # Configure rsyslog
     class { 'rsyslog::client':
@@ -84,4 +84,7 @@ class profile::jenkins::master {
 
   # Add fpm tool to create packages
   include fpm
+  class {'profile::modproxy':
+    proxy_template => "profile/jenkins.conf.epp",
+  }
 }
