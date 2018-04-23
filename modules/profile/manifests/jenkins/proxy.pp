@@ -9,7 +9,7 @@ class profile::jenkins::proxy
 
 # Configure rsyslog
   class {'rsyslog::client':}
-  
+
  rsyslog::config {'httpd':
    log_name          => '/var/log/httpd/*',
    log_tag           => 'httpd_',
@@ -24,7 +24,7 @@ class profile::jenkins::proxy
    owner             => 'root',
    group             => 'root',
    mode              => '0664',
-   content           => epp('profile/proxy.conf.epp', {dns_name => $facts['networking']['fqdn']}),
+   content           => epp('profile/jenkins.conf.epp', {dns_name => $facts['networking']['fqdn']}),
    notify            => Service['httpd'],
  }
 

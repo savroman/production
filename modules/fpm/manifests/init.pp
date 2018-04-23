@@ -7,11 +7,11 @@
 # @example
 #   include fpm
 class fpm {
-  $fpm_needs= ['ruby', 'ruby-devel', 'gcc', 'make', 'rpm-build', 'rubygems',]
+  $fpm_needs= ['ruby-devel', 'gcc', 'make', 'rpm-build', 'rubygems',]
 
   package { $fpm_needs:
-    ensure => latest,
-
+    ensure   => latest,
+    provider => 'yum',
   }
 
   exec { 'gem_update':
