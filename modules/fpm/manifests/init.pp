@@ -12,12 +12,12 @@ class fpm {
   package { $fpm_needs:
     ensure   => latest,
     provider => 'yum',
+    before   => Exec['gem_update'],
   }
 
   exec { 'gem_update':
     command => 'gem update --system',
     path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-    require  => Package["${fpm_needs}"],
   }
 
   package { 'fpm':
