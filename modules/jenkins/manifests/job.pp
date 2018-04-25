@@ -16,14 +16,14 @@ define jenkins::job (
     interval   => $interval,
   }
 
-  file { "${jenkins::jenkins_home}/${job_name}":
+  file { "${jenkins::jenkins_home}jobs/${job_name}":
     ensure  => directory,
     mode    => '0644',
     owner   => 'tomcat',
     group   => 'tomcat',
   }
 
-  file { "${jenkins::jenkins_home}/${job_name}/config.xml":
+  file { "${jenkins::jenkins_home}/jobs/${job_name}/config.xml":
     ensure  => file,
     mode    => '0644',
     owner   => 'tomcat',
