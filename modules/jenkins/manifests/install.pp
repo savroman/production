@@ -50,7 +50,7 @@ class jenkins::install (
     mode    => '0644',
     owner   => 'tomcat',
     group   => 'tomcat',
-    content => epp('jenkins/configs/config.xml.epp', $java_tool_hash),
+    content => epp('jenkins/configs/config.xml.epp', $security),
   }
 
   ### --- TOOLS INSTALLATION PART ---
