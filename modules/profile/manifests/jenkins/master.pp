@@ -69,7 +69,7 @@ class profile::jenkins::master {
   }
 
   #add job
-  jenkins::job { 'bugTrckr_app'
+  jenkins::job { 'bugTrckr_app':
     job_name   => 'bugTrckr',
     user       => 'admin',
     repoOwner  => 'if83',
