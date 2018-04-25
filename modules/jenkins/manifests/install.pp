@@ -17,6 +17,7 @@ class jenkins::install (
   $maven_tool_name    = $jenkins::mvn_tool_name,
   $maven_tool_url     = $jenkins::mvn_tool_url,
   $maven_tool_subdir  = $jenkins::mvn_tool_subdir,
+  $security           = $jenkins::useSecurity,
   ){
 
   # install custom jenkins rpm package
@@ -42,6 +43,14 @@ class jenkins::install (
     tries     => 3,
     try_sleep => 60,
     require   => File["${jenkins_home_dir}"]
+  }
+
+  file { "${jenkins_home_dir}/config.xml":
+    ensure  => file,
+    mode    => '0644',
+    owner   => 'tomcat',
+    group   => 'tomcat',
+    content => epp('jenkins/configs/config.xml.epp', $java_tool_hash),
   }
 
   ### --- TOOLS INSTALLATION PART ---

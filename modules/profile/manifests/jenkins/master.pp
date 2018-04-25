@@ -68,6 +68,15 @@ class profile::jenkins::master {
     require         => Service['tomcat'],
   }
 
+  #add job
+  jenkins::job { 'bugTrckr_app'
+    job_name   => 'bugTrckr',
+    user       => 'admin',
+    repoOwner  => 'if83',
+    repository => 'bugTrckr',
+    interval   => '120000',
+  }
+
   #install plugins from list in modules/profile/files/plugins.txt
   class { 'jenkins::plugins':
     plugin_repo_url  => 'http://repo.if083/soft/jenkins/plugins/',
@@ -83,7 +92,7 @@ class profile::jenkins::master {
   }
 
   # Add fpm tool to create packages
-  include fpm
+  # include fpm
   class {'profile::modproxy':
     proxy_template => "profile/jenkins.conf.epp",
   }
