@@ -18,7 +18,7 @@ class jenkins (
   $mvn_tool_url    = '',
   $mvn_tool_subdir = '',
   $security        = 'true',
-  $enableCLI       = 'false',
+  $enableCLI       = 'true',
   ){
 
   include jenkins::install
