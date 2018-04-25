@@ -29,6 +29,6 @@ define jenkins::job (
     owner   => 'tomcat',
     group   => 'tomcat',
     content => epp('jenkins/jobs/simplejob.xml.epp', $jobconf_hash),
-    require => File["${jenkins::jenkins_home}/${job_name}"],
+    require => File["${jenkins::jenkins_home}/jobs/${job_name}"],
   }
 }
