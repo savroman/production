@@ -9,7 +9,7 @@ define jenkins::job (
   $repository,
   $interval,
   ) {
-  require jenkins
+  
 
   $jobconf_hash = {
     user       => $user,
