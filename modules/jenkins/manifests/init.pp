@@ -17,8 +17,17 @@ class jenkins (
   $mvn_tool_name   = '',
   $mvn_tool_url    = '',
   $mvn_tool_subdir = '',
+  $useSecurity     = 'true',
+  $enableCLI       = 'false',
   ){
 
   include jenkins::install
 
+  file { "${jenkins_home} /jenkins.CLI.xml":
+    ensure  => file,
+    mode    => '0644',
+    owner   => 'tomcat',
+    group   => 'tomcat',
+    content => epp('jenkins/configs/jenkins.CLI.xml.epp', {enableCLI => $enableCLI})
+  }
 }
