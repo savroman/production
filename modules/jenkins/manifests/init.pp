@@ -23,7 +23,7 @@ class jenkins (
 
   include jenkins::install
 
-  file { "${jenkins_home} /jenkins.CLI.xml":
+  file { "${jenkins_home}/jenkins.CLI.xml":
     ensure  => file,
     mode    => '0644',
     owner   => 'tomcat',
