@@ -43,5 +43,15 @@
     <excludeClientIPFromCrumb>false</excludeClientIPFromCrumb>
   </crumbIssuer>
   <nodeProperties/>
-  <globalNodeProperties/>
+  <globalNodeProperties>
+   <hudson.tools.ToolLocationNodeProperty>
+     <locations>
+       <hudson.tools.ToolLocationNodeProperty_-ToolLocation>
+         <type>hudson.plugins.git.GitTool$DescriptorImpl</type>
+         <name>Default</name>
+         <home>/bin/git</home>
+       </hudson.tools.ToolLocationNodeProperty_-ToolLocation>
+     </locations>
+   </hudson.tools.ToolLocationNodeProperty>
+ </globalNodeProperties>
 </hudson>
