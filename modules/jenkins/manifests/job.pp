@@ -8,6 +8,7 @@ define jenkins::job (
   $repoOwner,
   $repository,
   $interval,
+  $git_path = 'bin/git',
   ) {
   $url = $jenkins::jenkins_url
 
@@ -37,5 +38,12 @@ define jenkins::job (
     command => 'systemctl restart tomcat',
     path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
     require => File["${jenkins::jenkins_home}/jobs/${job_name}"],
+  }
+
+  #config git
+  file { "${jenkins_home_dir}/hudson.plugins.git.gitTool.xml":
+    ensure => file,
+    mode => '0644',
+    content => epp('jenkins/configs/hudson.plugins.git.gitTool.xml.epp', {git_path => $git_path}),
   }
 }
