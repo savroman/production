@@ -50,7 +50,7 @@ class jenkins::plugins (
     require => [ File['/tmp/install_plugins.sh'], File['/tmp/plugins.txt'] ],
   }
 
-  config git
+  #config git
   file { "${jenkins_home_dir}/hudson.plugins.git.gitTool.xml":
     ensure => file,
     mode => '0644',
