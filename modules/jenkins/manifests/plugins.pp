@@ -15,7 +15,7 @@
 class jenkins::plugins (
   $plugin_list_file,
   $plugin_repo_url  = $jenkins::plugin_repo_url,
-  $git_path         = $jenkins::whereisgit,
+
   ){
 
   $plugin_dir = "${jenkins::jenkins_home}/plugins"
@@ -50,12 +50,7 @@ class jenkins::plugins (
     require => [ File['/tmp/install_plugins.sh'], File['/tmp/plugins.txt'] ],
   }
 
-  #config git
-  file { "${jenkins_home_dir}/hudson.plugins.git.gitTool.xml":
-    ensure => file,
-    mode => '0644',
-    content => epp('jenkins/configs/hudson.plugins.git.gitTool.xml.epp', {git_path => $git_path}),
-  }
+  
 
   #restart jenkins
   exec { 'restart_jenkins':
