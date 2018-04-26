@@ -2,7 +2,7 @@ class profile::basenode {
 
   include motd
   include ntp
-  include rpmrepo
+  
   # OS parameters for Update
   Exec {
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
