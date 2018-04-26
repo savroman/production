@@ -20,6 +20,7 @@ class jenkins::install (
   $useSecurity        = $jenkins::security,
   $user_name          = $jenkins::user,
   $user_pass          = $jenkins::password,
+  $git_path           = $jenkins::whereisgit,
   ){
 
   # install custom jenkins rpm package
@@ -56,6 +57,11 @@ class jenkins::install (
   }
 
   ### --- TOOLS INSTALLATION PART ---
+  #install git
+  package { 'git':
+    ensure    => installed,
+    provider  => 'yum',
+  }
 
   # create folder for groovy scripts
   file { "${jenkins_home_dir}/init.groovy.d":
@@ -108,5 +114,12 @@ class jenkins::install (
     mode => '0744',
     content => epp('jenkins/groovy/user.groovy.epp', $user_hash),
     require => File["${jenkins_home_dir}/init.groovy.d"],
+  }
+
+  #config git
+  file { "${jenkins_home_dir}/hudson.plugins.git.gitTool.xml":
+    ensure => file,
+    mode => '0644',
+    content => epp('jenkins/configs/hudson.plugins.git.gitTool.epp', {git_path => $git_path}),
   }
 }
