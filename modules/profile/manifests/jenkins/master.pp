@@ -72,6 +72,7 @@ class profile::jenkins::master {
 
   #add job
   jenkins::job { 'bugTrckr_app':
+    notify     => Service['tomcat'],
     job_name   => 'bugTrckr',
     user       => 'admin',
     repoOwner  => 'if83',
