@@ -30,7 +30,7 @@ class jenkins::install (
     #provider  => 'rpm',
     provider  => 'yum',
     #source    => 'http://repo.if083/soft/jenkins2-2.107.2.-1.x86_64.rpm',
-    notify    => Service['tomcat'],
+    subscribe => Service['tomcat'],
     #before    => Exec['wait_for_jenkins_deploy'],
   }
 
@@ -39,7 +39,7 @@ class jenkins::install (
     mode    => '0755',
     owner   => 'tomcat',
     group   => 'tomcat',
-    #require => Package['jenkins_war'],
+    require => Package['jenkins_war'],
   }
 
   exec { 'wait_for_jenkins_deploy':
