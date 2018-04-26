@@ -65,6 +65,8 @@ class profile::jenkins::master {
     mvn_tool_name   => 'maven3',
     mvn_tool_url    => 'http://repo.if083/soft/apache-maven-3.5.3-bin.tar.gz',
     mvn_tool_subdir => 'apache-maven-3.5.3',
+    user            => 'admin',
+    password        => 'admin',
     require         => Service['tomcat'],
   }
 

@@ -18,6 +18,8 @@ class jenkins::install (
   $maven_tool_url     = $jenkins::mvn_tool_url,
   $maven_tool_subdir  = $jenkins::mvn_tool_subdir,
   $useSecurity        = $jenkins::security,
+  $user_name          = $jenkins::user,
+  $user_pass          = $jenkins::password,
   ){
 
   # install custom jenkins rpm package
@@ -66,10 +68,11 @@ class jenkins::install (
 
   # install jenkins java tool
   if ($java_tool_install) {
-    $java_tool_hash = { java_tool_name   => $java_tool_name,
-                        java_tool_url    => $java_tool_url,
-                        java_tool_subdir => $java_tool_subdir,
-                      }
+    $java_tool_hash = {
+      java_tool_name   => $java_tool_name,
+      java_tool_url    => $java_tool_url,
+      java_tool_subdir => $java_tool_subdir,
+    }
 
     file { "${jenkins_home_dir}/init.groovy.d/java.groovy":
       ensure  => file,
@@ -81,10 +84,11 @@ class jenkins::install (
 
   #install jenkins maven tool
   if ($maven_tool_install) {
-    $maven_tool_hash = { maven_tool_name   => $maven_tool_name,
-                         maven_tool_url    => $maven_tool_url,
-                         maven_tool_subdir => $maven_tool_subdir,
-                       }
+    $maven_tool_hash = {
+      maven_tool_name   => $maven_tool_name,
+      maven_tool_url    => $maven_tool_url,
+      maven_tool_subdir => $maven_tool_subdir,
+    }
 
     file { "${jenkins_home_dir}/init.groovy.d/maven.groovy":
       ensure  => file,
@@ -93,5 +97,16 @@ class jenkins::install (
       require => File["${jenkins_home_dir}/init.groovy.d"],
     }
   }
+  #create user acount
+  $user_hash = {
+    user_name => $user_name,
+    user_pass => $user_pass,
+  }
 
+  file { "${jenkins_home_dir}/init.groovy.d/user.groovy":
+    ensure => file,
+    mode => '0744',
+    content => epp('jenkins/groovy/user.groovy.epp', $user_hash),
+    require => File["${jenkins_home_dir}/init.groovy.d"],
+  }
 }
