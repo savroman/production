@@ -32,5 +32,6 @@ define jenkins::job (
     group   => 'tomcat',
     content => epp('jenkins/jobs/simplejob.xml.epp', $jobconf_hash),
     require => File["${jenkins::jenkins_home}/jobs/${job_name}"],
+    notify  => Service['tomcat'],
   }
 }
