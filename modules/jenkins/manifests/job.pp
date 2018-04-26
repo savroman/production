@@ -24,7 +24,7 @@ define jenkins::job (
     owner   => 'tomcat',
     group   => 'tomcat',
   }
-  ~>
+  
   file { "${jenkins::jenkins_home}/jobs/${job_name}/config.xml":
     ensure  => file,
     mode    => '0644',
