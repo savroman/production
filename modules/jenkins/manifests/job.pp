@@ -9,7 +9,7 @@ define jenkins::job (
   $repository,
   $interval,
   ) {
-  
+  $url = $jenkins::jenkins_url
 
   $jobconf_hash = {
     user       => $user,
@@ -33,4 +33,12 @@ define jenkins::job (
     content => epp('jenkins/jobs/simplejob.xml.epp', $jobconf_hash),
     require => File["${jenkins::jenkins_home}/jobs/${job_name}"],
   }
+
+  exec { 'restart_jenkins':
+    command => "java -jar jenkins-cli.jar -s ${url}/ reload-configuration",
+    path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+    cwd     => '/usr/share/tomcat/webapps/jenkins/WEB-INF/',
+    require => FIle["${jenkins::jenkins_home}/jobs/${job_name}/config.xml"],
+  }
+
 }

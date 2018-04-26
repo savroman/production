@@ -8,8 +8,8 @@
   AllowEncodedSlashes NoDecode
 	ProxyRequests Off
   ProxyPreserveHost On
-  ProxyPass / http://localhost:8080/jenkins/ nocanon
-  <Proxy http://localhost:8080/*>
+  ProxyPass /jenkins http://localhost:8080/jenkins/ nocanon
+  <Proxy http://localhost:8080/jenkins*>
           Order deny,allow
           Allow from all
   </Proxy>
