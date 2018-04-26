@@ -20,7 +20,6 @@ class jenkins::install (
   $useSecurity        = $jenkins::security,
   $user_name          = $jenkins::user,
   $user_pass          = $jenkins::password,
-  $git_path           = $jenkins::whereisgit,
   ){
 
   # install custom jenkins rpm package
@@ -116,10 +115,4 @@ class jenkins::install (
     require => File["${jenkins_home_dir}/init.groovy.d"],
   }
 
-  #config git
-  file { "${jenkins_home_dir}/hudson.plugins.git.gitTool.xml":
-    ensure => file,
-    mode => '0644',
-    content => epp('jenkins/configs/hudson.plugins.git.gitTool.xml.epp', {git_path => $git_path}),
-  }
 }
