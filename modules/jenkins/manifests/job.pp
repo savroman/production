@@ -34,7 +34,7 @@ define jenkins::job (
     require => File["${jenkins::jenkins_home}/jobs/${job_name}"],
   }
 
-  exec { 'restart_jenkins':
+  exec { 'reload_configuration':
     command => "java -jar jenkins-cli.jar -s ${url}/ reload-configuration",
     path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
     cwd     => '/usr/share/tomcat/webapps/jenkins/WEB-INF/',
