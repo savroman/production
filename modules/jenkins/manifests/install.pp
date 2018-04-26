@@ -24,7 +24,7 @@ class jenkins::install (
 
   # install custom jenkins rpm package
   package { 'jenkins_war':
-    notify    => Service['tomcat'],
+    subscribe => Service['tomcat'],
     ensure    => installed,
     name      => 'jenkins2',
     #provider  => 'rpm',
