@@ -31,11 +31,11 @@ define jenkins::job (
     owner   => 'tomcat',
     group   => 'tomcat',
     content => epp('jenkins/jobs/simplejob.xml.epp', $jobconf_hash),
-    #require => File["${jenkins::jenkins_home}/jobs/${job_name}"],
+  }
 
   exec { 'restart_tomcat':
     command => 'systemctl restart tomcat',
     path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-    # refreshonly => true,
+    require => File["${jenkins::jenkins_home}/jobs/${job_name}"],
   }
 }
