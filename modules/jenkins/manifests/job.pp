@@ -38,5 +38,4 @@ define jenkins::job (
     path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
     # refreshonly => true,
   }
-  }
 }
