@@ -1,5 +1,5 @@
 <%- | String $user_name,
-      String $user_pass,
+      String $user_pass
 | -%>
 
 
