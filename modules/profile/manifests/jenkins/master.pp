@@ -96,7 +96,7 @@ class profile::jenkins::master {
   exec { 'restart_tomcat_':
     command => 'systemctl restart tomcat',
     path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-    require => File["${jenkins::jenkins_home}/jobs/${job_name}"],
+    
   }
 
   # Add fpm tool to create packages
