@@ -24,12 +24,13 @@ class jenkins::install (
 
   # install custom jenkins rpm package
   package { 'jenkins_war':
+    notify    => Service['tomcat'],
     ensure    => installed,
     name      => 'jenkins2',
     #provider  => 'rpm',
     provider  => 'yum',
     #source    => 'http://repo.if083/soft/jenkins2-2.107.2.-1.x86_64.rpm',
-    notify => Service['tomcat'],
+
     #before    => Exec['wait_for_jenkins_deploy'],
   }
 
