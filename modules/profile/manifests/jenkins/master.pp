@@ -72,12 +72,12 @@ class profile::jenkins::master {
 
   #add job
   jenkins::job { 'bugTrckr_app':
-    notify     => Service['tomcat'],
     job_name   => 'bugTrckr',
     user       => 'admin',
     repoOwner  => 'if83',
     repository => 'bugTrckr',
     interval   => '120000',
+    subscribe  => Service['tomcat'],
   }
 
   #install plugins from list in modules/profile/files/plugins.txt
