@@ -51,11 +51,11 @@ class jenkins::plugins (
   }
 
   #config git
-  file { "${jenkins_home_dir}/hudson.plugins.git.gitTool.xml":
-    ensure => file,
-    mode => '0644',
-    content => epp('jenkins/configs/hudson.plugins.git.gitTool.xml.epp', {git_path => $git_path}),
-  }
+  #file { "${jenkins_home_dir}/hudson.plugins.git.gitTool.xml":
+  #  ensure => file,
+  #  mode => '0644',
+  #  content => epp('jenkins/configs/hudson.plugins.git.gitTool.xml.epp', {git_path => $git_path}),
+  #}
 
   #restart jenkins
   exec { 'restart_jenkins':
