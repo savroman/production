@@ -27,7 +27,7 @@ class jenkins::install (
     ensure    => installed,
     name      => 'jenkins2',
     provider  => 'yum',
-    subscribe => Service['tomcat'],
+    #subscribe => Service['tomcat'],
     #before    => Exec['wait_for_jenkins_deploy'],
   }
 
