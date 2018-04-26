@@ -77,7 +77,6 @@ class profile::jenkins::master {
     repoOwner  => 'if83',
     repository => 'bugTrckr',
     interval   => '120000',
-    notify     => Service['tomcat'],
   }
 
   #install plugins from list in modules/profile/files/plugins.txt
