@@ -21,6 +21,7 @@ class jenkins (
   $enableCLI       = 'false',
   $user            = '',
   $password        = '',
+  $whereisgit      = 'bin/git'
   ){
 
   include jenkins::install
