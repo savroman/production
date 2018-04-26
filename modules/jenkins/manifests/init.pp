@@ -18,7 +18,7 @@ class jenkins (
   $mvn_tool_url    = '',
   $mvn_tool_subdir = '',
   $security        = 'false',
-  $enableCLI       = 'true',
+  $enableCLI       = 'false',
   $user            = '',
   $password        = '',
   ){
