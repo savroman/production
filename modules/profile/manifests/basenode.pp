@@ -2,7 +2,7 @@ class profile::basenode {
 
   include motd
   include ntp
-
+  include rpmrepo
   # OS parameters for Update
   Exec {
       path => '/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
@@ -32,11 +32,15 @@ class profile::basenode {
 
 
 # Configure rpmrepo
-  rpmrepo::repocfg {'soft':
-    reponame => "Our Soft",
-    url      => "http://repo.if083",
-    subpath  => "soft"
+  yumrepo { 'soft':
+    enabled  => 1,
+    descr    => "Our repo",
+    baseurl  => "http://repo.if083/soft/",
+    gpgcheck => 0,
+    priority => 1,
   }
+
+
 # Configure rsyslog
   rsyslog::config { 'secure':
     log_name     => '/var/log/secure',
